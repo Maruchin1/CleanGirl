@@ -1,18 +1,14 @@
 package com.maruchin.cleangirl.data.model
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bathtub
-import androidx.compose.material.icons.filled.Bed
-import androidx.compose.material.icons.filled.Kitchen
-import androidx.compose.material.icons.filled.Weekend
-import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 data class Room(
     val id: String,
     val name: String,
-    val icon: ImageVector,
+    val icon: RoomIcon,
     val tasks: List<Task> = emptyList()
 ) {
 
@@ -23,12 +19,28 @@ data class Room(
     fun getTasksNotForDay(day: LocalDate): List<Task> {
         return tasks.filter { !it.isPlannedForDay(day) }
     }
+
+    fun update(updatedRoom: UpdatedRoom): Room = copy(
+        name = updatedRoom.name,
+        icon = updatedRoom.icon
+    )
+
+    companion object {
+
+        @OptIn(ExperimentalUuidApi::class)
+        fun from(newRoom: NewRoom) = Room(
+            id = Uuid.random().toString(),
+            name = newRoom.name,
+            icon = newRoom.icon,
+            tasks = emptyList()
+        )
+    }
 }
 
 val sampleRoomLivingRoom = Room(
     id = "living_room",
     name = "Salon",
-    icon = Icons.Default.Weekend,
+    icon = RoomIcon.LivingRoom,
     tasks = listOf(
         Task(
             id = "1",
@@ -69,7 +81,7 @@ val sampleRoomLivingRoom = Room(
 val sampleRoomBedroom = Room(
     id = "bedroom",
     name = "Sypialnia",
-    icon = Icons.Default.Bed,
+    icon = RoomIcon.Bedroom,
     tasks = listOf(
         Task(
             id = "4",
@@ -110,7 +122,7 @@ val sampleRoomBedroom = Room(
 val sampleRoomKitchen = Room(
     id = "kitchen",
     name = "Kuchnia",
-    icon = Icons.Default.Kitchen,
+    icon = RoomIcon.Kitchen,
     tasks = listOf(
         Task(
             id = "7",
@@ -151,7 +163,7 @@ val sampleRoomKitchen = Room(
 val sampleRoomBathroom = Room(
     id = "bathroom",
     name = "Łazienka",
-    icon = Icons.Default.Bathtub,
+    icon = RoomIcon.Bathroom,
     tasks = listOf(
         Task(
             id = "10",
