@@ -18,11 +18,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import cleangirl.composeapp.generated.resources.Res
 import cleangirl.composeapp.generated.resources.compose_multiplatform
+import com.maruchin.cleangirl.ui.theme.CleanGirlTheme
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    CleanGirlTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
