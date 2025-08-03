@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
-class InMemoryRoomRepository : RoomRepository {
+class InMemoryRoomRepository private constructor() : RoomRepository {
     private val roomState = MutableStateFlow(sampleRoomList.associateBy { it.id })
 
     override val roomsFlow: Flow<List<Room>> = roomState.map { it.values.toList() }
@@ -32,5 +32,10 @@ class InMemoryRoomRepository : RoomRepository {
 
     override suspend fun deleteRoom(roomId: String) {
         roomState.update { it - roomId }
+    }
+
+    companion object {
+
+        val instance by lazy { InMemoryRoomRepository() }
     }
 }
