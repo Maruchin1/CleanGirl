@@ -18,7 +18,7 @@ fun HomeTopBar(user: User?, scrollBehavior: TopAppBarScrollBehavior) {
             }
         },
         subtitle = {
-            Text(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+            Text(text = "Lorem ipsum dolor sit amet")
         },
         scrollBehavior = scrollBehavior
     )
