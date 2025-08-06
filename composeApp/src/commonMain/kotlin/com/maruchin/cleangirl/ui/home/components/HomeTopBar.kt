@@ -1,5 +1,6 @@
 package com.maruchin.cleangirl.ui.home.components
 
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LargeFlexibleTopAppBar
@@ -10,7 +11,11 @@ import com.maruchin.cleangirl.data.model.User
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun HomeTopBar(user: User?, scrollBehavior: TopAppBarScrollBehavior) {
+fun HomeTopBar(
+    user: User?,
+    scrollBehavior: TopAppBarScrollBehavior,
+    currentDate: DatePickerState
+) {
     LargeFlexibleTopAppBar(
         title = {
             if (user != null) {
@@ -19,6 +24,9 @@ fun HomeTopBar(user: User?, scrollBehavior: TopAppBarScrollBehavior) {
         },
         subtitle = {
             Text(text = "Lorem ipsum dolor sit amet")
+        },
+        actions = {
+            DateSelector(currentDate)
         },
         scrollBehavior = scrollBehavior
     )
