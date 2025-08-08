@@ -12,7 +12,7 @@ data object HomeRoute
 
 fun NavGraphBuilder.homeScreen() {
     composable<HomeRoute> {
-        val viewModel = viewModel<HomeViewModel>()
+        val viewModel = viewModel { HomeViewModel() }
         val state by viewModel.uiState.collectAsStateWithLifecycle()
 
         HomeScreen(state = state)
