@@ -12,9 +12,14 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.data.model.Room
+import com.maruchin.cleangirl.ui.roomeditor.RoomEditorBottomSheet
 import com.maruchin.cleangirl.ui.utils.toImageVector
 
 @Composable
@@ -24,6 +29,8 @@ fun RoomSelector(
     onRoomChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var isAddingRoom by rememberSaveable { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,7 +45,11 @@ fun RoomSelector(
                 onClick = { onRoomChange(index) }
             )
         }
-        NewRoomButton(onClick = {})
+        NewRoomButton(onClick = { isAddingRoom = true })
+    }
+
+    if (isAddingRoom) {
+        RoomEditorBottomSheet(onClose = { isAddingRoom = false })
     }
 }
 
