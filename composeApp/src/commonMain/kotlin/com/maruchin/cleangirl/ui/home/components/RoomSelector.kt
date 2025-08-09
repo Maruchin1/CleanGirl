@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.data.model.Room
+import com.maruchin.cleangirl.ui.utils.toImageVector
 
 @Composable
 fun RoomSelector(
@@ -46,7 +47,8 @@ private fun RoomChip(room: Room, isSelected: Boolean, onClick: () -> Unit) {
     FilterChip(
         selected = isSelected,
         onClick = onClick,
-        label = { Text(text = room.name) }
+        label = { Text(text = room.name) },
+        leadingIcon = { Icon(imageVector = room.icon.toImageVector(), contentDescription = null) }
     )
 }
 

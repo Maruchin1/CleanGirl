@@ -14,7 +14,7 @@ import com.maruchin.cleangirl.data.model.User
 fun HomeTopBar(
     user: User?,
     scrollBehavior: TopAppBarScrollBehavior,
-    currentDate: DatePickerState
+    datePickerState: DatePickerState
 ) {
     LargeFlexibleTopAppBar(
         title = {
@@ -26,7 +26,7 @@ fun HomeTopBar(
             Text(text = "Lorem ipsum dolor sit amet")
         },
         actions = {
-            DateSelector(currentDate)
+            DateSelector(datePickerState)
         },
         scrollBehavior = scrollBehavior
     )
