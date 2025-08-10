@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.data.model.Room
+import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import kotlinx.datetime.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,13 +23,14 @@ fun RoomTaskList(
     room: Room,
     date: LocalDate,
     topAppBarScrollBehavior: TopAppBarScrollBehavior,
+    onTaskCompleteChange: (TaskCompletionToggle) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val todayTasks = remember(room, date) {
-        room.getTasksForDay(date)
+        room.getTasksFor(date)
     }
     val otherTasks = remember(room, date) {
-        room.getTasksNotForDay(date)
+        room.getTasksNotFor(date)
     }
 
     LazyColumn(
@@ -43,13 +45,37 @@ fun RoomTaskList(
             TaskListHeader(text = "Dzisiaj")
         }
         items(todayTasks) { task ->
-            TaskItem(task = task, date = date, onCompletedChange = {})
+            TaskItem(
+                task = task,
+                date = date,
+                onCompletedChange = { completed ->
+                    val taskCompletionToggle = TaskCompletionToggle(
+                        roomId = room.id,
+                        taskId = task.id,
+                        date = date,
+                        completed = completed
+                    )
+                    onTaskCompleteChange(taskCompletionToggle)
+                }
+            )
         }
         stickyHeader {
             TaskListHeader(text = "Pozostałe", modifier = Modifier.padding(top = 16.dp))
         }
         items(otherTasks) { task ->
-            TaskItem(task = task, date = date, onCompletedChange = {})
+            TaskItem(
+                task = task,
+                date = date,
+                onCompletedChange = { completed ->
+                    val taskCompletionToggle = TaskCompletionToggle(
+                        roomId = room.id,
+                        taskId = task.id,
+                        date = date,
+                        completed = completed
+                    )
+                    onTaskCompleteChange(taskCompletionToggle)
+                }
+            )
         }
     }
 }

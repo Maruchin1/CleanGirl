@@ -37,7 +37,7 @@ fun TaskItem(
     modifier: Modifier = Modifier
 ) {
     val isForToday = remember(task, date) {
-        task.isPlannedForDay(date)
+        task.isPlannedFor(date)
     }
 
     Card(modifier = Modifier.fillMaxWidth().then(modifier)) {

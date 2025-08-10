@@ -45,19 +45,23 @@ data class Task(
             }
         }
 
-    fun isCompleted(day: LocalDate): Boolean {
-        return records.any { it == day }
+    fun isCompleted(date: LocalDate): Boolean {
+        return records.any { it == date }
     }
 
-    fun complete(day: LocalDate) = copy(
-        records = records + day
+    fun toggleCompleted(date: LocalDate, completed: Boolean) = copy(
+        records = if (completed) {
+            records + date
+        } else {
+            records.filter { it != date }
+        }
     )
 
-    fun isPlannedForDay(day: LocalDate): Boolean {
+    fun isPlannedFor(date: LocalDate): Boolean {
         return when (recurrence) {
             is Recurrence.Daily -> recurrence.timesOfDay.isNotEmpty()
-            is Recurrence.Weekly -> recurrence.daysOfWeek.contains(day.dayOfWeek)
-            is Recurrence.Monthly -> recurrence.daysOfMoth.contains(day.day)
+            is Recurrence.Weekly -> recurrence.daysOfWeek.contains(date.dayOfWeek)
+            is Recurrence.Monthly -> recurrence.daysOfMoth.contains(date.day)
         }
     }
 }

@@ -2,8 +2,7 @@ package com.maruchin.cleangirl.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.maruchin.cleangirl.data.model.NewRoom
-import com.maruchin.cleangirl.data.model.UpdatedRoom
+import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.repository.InMemoryRoomRepository
 import com.maruchin.cleangirl.data.repository.InMemoryUserRepository
 import com.maruchin.cleangirl.data.repository.RoomRepository
@@ -29,15 +28,7 @@ class HomeViewModel(
         initialValue = HomeUiState()
     )
 
-    fun createRoom(newRoom: NewRoom) = viewModelScope.launch {
-        roomRepository.createRoom(newRoom)
-    }
-
-    fun updateRoom(updatedRoom: UpdatedRoom) = viewModelScope.launch {
-        roomRepository.updateRoom(updatedRoom)
-    }
-
-    fun deleteRoom(roomId: String) = viewModelScope.launch {
-        roomRepository.deleteRoom(roomId)
+    fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle) = viewModelScope.launch {
+        roomRepository.toggleTaskCompleted(taskCompletionToggle)
     }
 }

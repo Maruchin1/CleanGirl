@@ -12,18 +12,29 @@ data class Room(
     val tasks: List<Task> = emptyList()
 ) {
 
-    fun getTasksForDay(day: LocalDate): List<Task> {
-        return tasks.filter { it.isPlannedForDay(day) }
+    fun getTasksFor(date: LocalDate): List<Task> {
+        return tasks.filter { it.isPlannedFor(date) }
     }
 
-    fun getTasksNotForDay(day: LocalDate): List<Task> {
-        return tasks.filter { !it.isPlannedForDay(day) }
+    fun getTasksNotFor(date: LocalDate): List<Task> {
+        return tasks.filter { !it.isPlannedFor(date) }
     }
 
     fun update(updatedRoom: UpdatedRoom): Room = copy(
         name = updatedRoom.name,
         icon = updatedRoom.icon
     )
+
+    fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle): Room {
+        val updatedTasks = tasks.map { task ->
+            if (task.id == taskCompletionToggle.taskId) {
+                task.toggleCompleted(taskCompletionToggle.date, taskCompletionToggle.completed)
+            } else {
+                task
+            }
+        }
+        return copy(tasks = updatedTasks)
+    }
 
     companion object {
 

@@ -2,6 +2,7 @@ package com.maruchin.cleangirl.data.repository
 
 import com.maruchin.cleangirl.data.model.NewRoom
 import com.maruchin.cleangirl.data.model.Room
+import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.UpdatedRoom
 import com.maruchin.cleangirl.data.model.sampleRoomList
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,16 @@ class InMemoryRoomRepository private constructor() : RoomRepository {
         val room = roomState.value[updatedRoom.id]
         checkNotNull(room) { "Room with id ${updatedRoom.id} not found" }
         val updatedRoom = room.update(updatedRoom)
+        roomState.update {
+            it + (updatedRoom.id to updatedRoom)
+        }
+    }
+
+    override suspend fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle) {
+        val (roomId) = taskCompletionToggle
+        val room = roomState.value[roomId]
+        checkNotNull(room) { "Room with id $roomId not found" }
+        val updatedRoom = room.toggleTaskCompleted(taskCompletionToggle)
         roomState.update {
             it + (updatedRoom.id to updatedRoom)
         }

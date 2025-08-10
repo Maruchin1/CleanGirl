@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.core.utils.currentTimeMillis
 import com.maruchin.cleangirl.core.utils.toLocalDateTime
+import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.sampleRoomList
 import com.maruchin.cleangirl.data.model.sampleUser
 import com.maruchin.cleangirl.ui.home.components.HomeTopBar
@@ -30,7 +31,7 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
-fun HomeScreen(state: HomeUiState) {
+fun HomeScreen(state: HomeUiState, onTaskCompleteChange: (TaskCompletionToggle) -> Unit) {
     val topAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentTimeMillis)
     val roomPagerState = rememberPagerState { state.rooms.size }
@@ -66,7 +67,8 @@ fun HomeScreen(state: HomeUiState) {
                 RoomTaskList(
                     room = state.rooms[page],
                     date = date,
-                    topAppBarScrollBehavior = topAppBarScrollBehavior
+                    topAppBarScrollBehavior = topAppBarScrollBehavior,
+                    onTaskCompleteChange = onTaskCompleteChange
                 )
             }
         }
@@ -78,7 +80,8 @@ fun HomeScreen(state: HomeUiState) {
 private fun HomeScreenPreview() {
     CleanGirlTheme {
         HomeScreen(
-            state = HomeUiState(user = sampleUser, rooms = sampleRoomList)
+            state = HomeUiState(user = sampleUser, rooms = sampleRoomList),
+            onTaskCompleteChange = {}
         )
     }
 }

@@ -15,6 +15,9 @@ fun NavGraphBuilder.homeScreen() {
         val viewModel = viewModel { HomeViewModel() }
         val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-        HomeScreen(state = state)
+        HomeScreen(
+            state = state,
+            onTaskCompleteChange = viewModel::toggleTaskCompleted
+        )
     }
 }
