@@ -12,12 +12,12 @@ data class Room(
     val tasks: List<Task> = emptyList()
 ) {
 
-    fun getTasksFor(date: LocalDate): List<Task> {
-        return tasks.filter { it.isPlannedFor(date) }
+    fun getTasksFor(date: LocalDate): List<DailyTask> {
+        return tasks.filter { it.isPlannedFor(date) }.map { DailyTask.fromTask(it, date) }
     }
 
-    fun getTasksNotFor(date: LocalDate): List<Task> {
-        return tasks.filter { !it.isPlannedFor(date) }
+    fun getTasksNotFor(date: LocalDate): List<DailyTask> {
+        return tasks.filter { !it.isPlannedFor(date) }.map { DailyTask.fromTask(it, date) }
     }
 
     fun update(updatedRoom: UpdatedRoom): Room = copy(

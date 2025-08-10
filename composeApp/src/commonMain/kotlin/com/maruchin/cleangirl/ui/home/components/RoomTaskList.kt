@@ -45,9 +45,9 @@ fun RoomTaskList(
             TaskListHeader(text = "Dzisiaj")
         }
         items(todayTasks) { task ->
-            TaskItem(
+            DailyTaskItem(
                 task = task,
-                date = date,
+                isPlannedForToday = true,
                 onCompletedChange = { completed ->
                     val taskCompletionToggle = TaskCompletionToggle(
                         roomId = room.id,
@@ -63,9 +63,9 @@ fun RoomTaskList(
             TaskListHeader(text = "Pozostałe", modifier = Modifier.padding(top = 16.dp))
         }
         items(otherTasks) { task ->
-            TaskItem(
+            DailyTaskItem(
                 task = task,
-                date = date,
+                isPlannedForToday = false,
                 onCompletedChange = { completed ->
                     val taskCompletionToggle = TaskCompletionToggle(
                         roomId = room.id,

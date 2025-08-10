@@ -16,7 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -26,20 +25,15 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.maruchin.cleangirl.data.model.Task
-import kotlinx.datetime.LocalDate
+import com.maruchin.cleangirl.data.model.DailyTask
 
 @Composable
-fun TaskItem(
-    task: Task,
-    date: LocalDate,
+fun DailyTaskItem(
+    task: DailyTask,
+    isPlannedForToday: Boolean,
     onCompletedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val isForToday = remember(task, date) {
-        task.isPlannedFor(date)
-    }
-
     Card(modifier = Modifier.fillMaxWidth().then(modifier)) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -50,10 +44,12 @@ fun TaskItem(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
-            Checkbox(
-                checked = task.isCompleted(date),
-                onCheckedChange = onCompletedChange
-            )
+            if (isPlannedForToday) {
+                Checkbox(
+                    checked = task.isCompleted,
+                    onCheckedChange = onCompletedChange
+                )
+            }
         }
         HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp))
         Column(
@@ -69,17 +65,15 @@ fun TaskItem(
                     }
                 },
             )
-            if (!isForToday) {
-                RecordInfo(
-                    icon = Icons.Rounded.FastForward,
-                    text = buildAnnotatedString {
-                        append("Następny raz: ")
-                        withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                            append(task.nextPlanned?.toString() ?: "nigdy")
-                        }
+            RecordInfo(
+                icon = Icons.Rounded.FastForward,
+                text = buildAnnotatedString {
+                    append("Następny raz: ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
+                        append(task.nextPlanned?.toString() ?: "nigdy")
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
