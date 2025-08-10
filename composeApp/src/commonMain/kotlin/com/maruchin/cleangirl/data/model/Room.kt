@@ -13,7 +13,9 @@ data class Room(
 ) {
 
     fun getTasksFor(date: LocalDate): List<DailyTask> {
-        return tasks.filter { it.isPlannedFor(date) }.map { DailyTask.fromTask(it, date) }
+        return tasks.filter { it.isPlannedFor(date) }
+            .map { DailyTask.fromTask(it, date) }
+            .sortedWith(DailyTask.comparator)
     }
 
     fun getTasksNotFor(date: LocalDate): List<DailyTask> {

@@ -19,5 +19,8 @@ data class DailyTask(
             lastCompleted = task.lastCompleted(date),
             nextPlanned = task.nextPlanned(date),
         )
+
+        val comparator = compareBy<DailyTask> { it.isCompleted }
+            .thenBy { it.name.lowercase() }
     }
 }

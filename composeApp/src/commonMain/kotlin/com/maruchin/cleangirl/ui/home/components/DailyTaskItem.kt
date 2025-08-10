@@ -23,6 +23,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.data.model.DailyTask
@@ -42,6 +43,11 @@ fun DailyTaskItem(
             Text(
                 text = task.name,
                 style = MaterialTheme.typography.titleMedium,
+                textDecoration = if (task.isCompleted) {
+                    TextDecoration.LineThrough
+                } else {
+                    TextDecoration.None
+                },
                 modifier = Modifier.weight(1f)
             )
             if (isPlannedForToday) {

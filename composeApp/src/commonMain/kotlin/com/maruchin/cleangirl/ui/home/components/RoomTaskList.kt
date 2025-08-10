@@ -44,7 +44,7 @@ fun RoomTaskList(
         stickyHeader {
             TaskListHeader(text = "Dzisiaj")
         }
-        items(todayTasks) { task ->
+        items(todayTasks, key = { it.id }) { task ->
             DailyTaskItem(
                 task = task,
                 isPlannedForToday = true,
@@ -56,13 +56,14 @@ fun RoomTaskList(
                         completed = completed
                     )
                     onTaskCompleteChange(taskCompletionToggle)
-                }
+                },
+                modifier = Modifier.animateItem()
             )
         }
         stickyHeader {
             TaskListHeader(text = "Pozostałe", modifier = Modifier.padding(top = 16.dp))
         }
-        items(otherTasks) { task ->
+        items(otherTasks, key = { it.id }) { task ->
             DailyTaskItem(
                 task = task,
                 isPlannedForToday = false,
