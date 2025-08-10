@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -42,17 +40,13 @@ fun RoomTaskList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         stickyHeader {
-            Text(text = "Dzisiaj", style = MaterialTheme.typography.headlineSmall)
+            TaskListHeader(text = "Dzisiaj")
         }
         items(todayTasks) { task ->
             TaskItem(task = task, date = date, onCompletedChange = {})
         }
         stickyHeader {
-            Text(
-                text = "Pozostałe",
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(top = 16.dp)
-            )
+            TaskListHeader(text = "Pozostałe", modifier = Modifier.padding(top = 16.dp))
         }
         items(otherTasks) { task ->
             TaskItem(task = task, date = date, onCompletedChange = {})
