@@ -87,6 +87,50 @@ val sampleRoomLivingRoom = Room(
                 LocalDate(2024, 5, 15),
                 LocalDate(2024, 6, 15)
             )
+        ),
+        Task(
+            id = "13",
+            name = "Przetrzeć meble",
+            recurrence = Recurrence.Weekly(
+                daysOfWeek = setOf(DayOfWeek.WEDNESDAY)
+            ),
+            records = listOf(
+                LocalDate(2024, 6, 5),
+                LocalDate(2024, 6, 12)
+            )
+        ),
+        Task(
+            id = "14",
+            name = "Podlać kwiaty",
+            recurrence = Recurrence.Weekly(
+                daysOfWeek = setOf(DayOfWeek.MONDAY)
+            ),
+            records = listOf(
+                LocalDate(2024, 6, 3),
+                LocalDate(2024, 6, 10)
+            )
+        ),
+        Task(
+            id = "15",
+            name = "Wymienić świece zapachowe",
+            recurrence = Recurrence.Monthly(
+                daysOfMoth = setOf(1)
+            ),
+            records = listOf(
+                LocalDate(2024, 5, 1),
+                LocalDate(2024, 6, 1)
+            )
+        ),
+        Task(
+            id = "16",
+            name = "Wyprać zasłony",
+            recurrence = Recurrence.Monthly(
+                daysOfMoth = setOf(20)
+            ),
+            records = listOf(
+                LocalDate(2024, 5, 20),
+                LocalDate(2024, 6, 20)
+            )
         )
     )
 )

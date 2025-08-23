@@ -13,6 +13,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -33,7 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun DateSelector(datePickerState: DatePickerState) {
     var isSelecting by rememberSaveable { mutableStateOf(false) }
 
-    Button(
+    FilledTonalButton(
         onClick = { isSelecting = true },
         contentPadding = ButtonDefaults.ExtraSmallContentPadding,
         shape = ButtonDefaults.squareShape,
