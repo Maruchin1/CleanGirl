@@ -106,6 +106,7 @@ private fun RoomEditorContent(
 
     if (room != null && confirmRoomDeletion) {
         ConfirmRoomDeletionAlert(
+            room = room,
             onDismiss = { confirmRoomDeletion = false },
             onConfirm = {
                 confirmRoomDeletion = false

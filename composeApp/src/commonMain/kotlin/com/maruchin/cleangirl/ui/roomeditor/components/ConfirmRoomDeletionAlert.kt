@@ -8,19 +8,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.style.TextAlign
+import com.maruchin.cleangirl.data.model.Room
 
 @Composable
-fun ConfirmRoomDeletionAlert(onDismiss: () -> Unit, onConfirm: () -> Unit) {
+fun ConfirmRoomDeletionAlert(room: Room, onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = {
             Icon(Icons.Rounded.Delete, contentDescription = null)
         },
         title = {
-            Text(text = "Usunąć pokój?")
+            Text(text = "Usunąć ${room.name}?", textAlign = TextAlign.Center)
         },
         text = {
-            Text(text = "Usunięty zostanie cały pokój, wszystkie zaplanowane dla niego zadania i cała historia.")
+            Text(
+                text = "Usunięty zostanie cały pokój, wszystkie zaplanowane dla niego zadania i cała historia.",
+                textAlign = TextAlign.Center
+            )
         },
         confirmButton = {
             Button(onClick = onConfirm) {

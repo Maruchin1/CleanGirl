@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -15,13 +14,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,6 +31,7 @@ import com.maruchin.cleangirl.ui.home.components.HomeToolbar
 import com.maruchin.cleangirl.ui.home.components.HomeTopBar
 import com.maruchin.cleangirl.ui.home.components.RoomSelector
 import com.maruchin.cleangirl.ui.home.components.RoomTaskList
+import com.maruchin.cleangirl.ui.home.utils.rememberRoompagerState
 import com.maruchin.cleangirl.ui.theme.CleanGirlTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -52,23 +49,12 @@ fun HomeScreen(state: HomeUiState, onTaskCompleteChange: (TaskCompletionToggle) 
         exitDirection = FloatingToolbarExitDirection.Bottom
     )
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentTimeMillis)
-    val roomPagerState = remember(state.rooms.size) {
-        PagerState { state.rooms.size }
-    }
+    val roomPagerState = rememberRoompagerState(state.rooms)
     val scope = rememberCoroutineScope()
 
     val date by remember {
         derivedStateOf {
             datePickerState.selectedDateMillis!!.toLocalDateTime().date
-        }
-    }
-
-    var previousRoomsSize by remember { mutableStateOf(state.rooms.size) }
-
-    LaunchedEffect(state.rooms.size) {
-        val currentRoomsSize = state.rooms.size
-        if (currentRoomsSize < previousRoomsSize) {
-            roomPagerState.scrollToPage(0)
         }
     }
 
