@@ -1,7 +1,7 @@
 package com.maruchin.cleangirl.data.model
 
-enum class RoomIcon {
-    Home,
+enum class RoomType {
+    Default,
     Kitchen,
     Bedroom,
     Bathroom,

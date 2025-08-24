@@ -8,7 +8,7 @@ import kotlin.uuid.Uuid
 data class Room(
     val id: String,
     val name: String,
-    val icon: RoomIcon,
+    val icon: RoomType,
     val tasks: List<Task> = emptyList()
 ) {
 
@@ -24,7 +24,7 @@ data class Room(
 
     fun update(updatedRoom: UpdatedRoom): Room = copy(
         name = updatedRoom.name,
-        icon = updatedRoom.icon
+        icon = updatedRoom.type
     )
 
     fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle): Room {
@@ -53,7 +53,7 @@ data class Room(
 val sampleRoomLivingRoom = Room(
     id = "living_room",
     name = "Salon",
-    icon = RoomIcon.LivingRoom,
+    icon = RoomType.LivingRoom,
     tasks = listOf(
         Task(
             id = "1",
@@ -138,7 +138,7 @@ val sampleRoomLivingRoom = Room(
 val sampleRoomBedroom = Room(
     id = "bedroom",
     name = "Sypialnia",
-    icon = RoomIcon.Bedroom,
+    icon = RoomType.Bedroom,
     tasks = listOf(
         Task(
             id = "4",
@@ -179,7 +179,7 @@ val sampleRoomBedroom = Room(
 val sampleRoomKitchen = Room(
     id = "kitchen",
     name = "Kuchnia",
-    icon = RoomIcon.Kitchen,
+    icon = RoomType.Kitchen,
     tasks = listOf(
         Task(
             id = "7",
@@ -220,7 +220,7 @@ val sampleRoomKitchen = Room(
 val sampleRoomBathroom = Room(
     id = "bathroom",
     name = "Łazienka",
-    icon = RoomIcon.Bathroom,
+    icon = RoomType.Bathroom,
     tasks = listOf(
         Task(
             id = "10",

@@ -49,7 +49,7 @@ fun RoomSelector(
     }
 
     if (isAddingRoom) {
-        RoomEditorBottomSheet(onClose = { isAddingRoom = false })
+        RoomEditorBottomSheet(room = null, onClose = { isAddingRoom = false })
     }
 }
 

@@ -25,56 +25,56 @@ import androidx.compose.material.icons.rounded.Weekend
 import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material.icons.rounded.Yard
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.maruchin.cleangirl.data.model.RoomIcon
+import com.maruchin.cleangirl.data.model.RoomType
 
-fun RoomIcon.toImageVector(): ImageVector = when (this) {
-    RoomIcon.Home -> Icons.Rounded.Home
-    RoomIcon.Kitchen -> Icons.Rounded.Kitchen
-    RoomIcon.Bedroom -> Icons.Rounded.KingBed
-    RoomIcon.Bathroom -> Icons.Rounded.Bathtub
-    RoomIcon.LivingRoom -> Icons.Rounded.Weekend
-    RoomIcon.DiningRoom -> Icons.Rounded.Dining
-    RoomIcon.Hallway -> Icons.Rounded.DirectionsWalk
-    RoomIcon.Office -> Icons.Rounded.Work
-    RoomIcon.Garage -> Icons.Rounded.Garage
-    RoomIcon.Laundry -> Icons.Rounded.LocalLaundryService
-    RoomIcon.Pantry -> Icons.Rounded.Restaurant
-    RoomIcon.Basement -> Icons.Rounded.Stairs
-    RoomIcon.Attic -> Icons.Rounded.Roofing
-    RoomIcon.Balcony -> Icons.Rounded.Balcony
-    RoomIcon.Terrace -> Icons.Rounded.Terrain
-    RoomIcon.Closet -> Icons.Rounded.Checkroom
-    RoomIcon.Nursery -> Icons.Rounded.ChildCare
-    RoomIcon.GuestRoom -> Icons.Rounded.Hotel
-    RoomIcon.Storage -> Icons.Rounded.Inventory
-    RoomIcon.Gym -> Icons.Rounded.FitnessCenter
-    RoomIcon.Workshop -> Icons.Rounded.Build
-    RoomIcon.Garden -> Icons.Rounded.Yard
-    RoomIcon.Toilet -> Icons.Rounded.Wc
+fun RoomType.toImageVector(): ImageVector = when (this) {
+    RoomType.Default -> Icons.Rounded.Home
+    RoomType.Kitchen -> Icons.Rounded.Kitchen
+    RoomType.Bedroom -> Icons.Rounded.KingBed
+    RoomType.Bathroom -> Icons.Rounded.Bathtub
+    RoomType.LivingRoom -> Icons.Rounded.Weekend
+    RoomType.DiningRoom -> Icons.Rounded.Dining
+    RoomType.Hallway -> Icons.Rounded.DirectionsWalk
+    RoomType.Office -> Icons.Rounded.Work
+    RoomType.Garage -> Icons.Rounded.Garage
+    RoomType.Laundry -> Icons.Rounded.LocalLaundryService
+    RoomType.Pantry -> Icons.Rounded.Restaurant
+    RoomType.Basement -> Icons.Rounded.Stairs
+    RoomType.Attic -> Icons.Rounded.Roofing
+    RoomType.Balcony -> Icons.Rounded.Balcony
+    RoomType.Terrace -> Icons.Rounded.Terrain
+    RoomType.Closet -> Icons.Rounded.Checkroom
+    RoomType.Nursery -> Icons.Rounded.ChildCare
+    RoomType.GuestRoom -> Icons.Rounded.Hotel
+    RoomType.Storage -> Icons.Rounded.Inventory
+    RoomType.Gym -> Icons.Rounded.FitnessCenter
+    RoomType.Workshop -> Icons.Rounded.Build
+    RoomType.Garden -> Icons.Rounded.Yard
+    RoomType.Toilet -> Icons.Rounded.Wc
 }
 
-fun RoomIcon.toText(): String = when (this) {
-    RoomIcon.Home -> "Pokój"
-    RoomIcon.Kitchen -> "Kuchnia"
-    RoomIcon.Bedroom -> "Sypialnia"
-    RoomIcon.Bathroom -> "Łazienka"
-    RoomIcon.LivingRoom -> "Salon"
-    RoomIcon.DiningRoom -> "Jadalnia"
-    RoomIcon.Hallway -> "Korytarz"
-    RoomIcon.Office -> "Biuro"
-    RoomIcon.Garage -> "Garaż"
-    RoomIcon.Laundry -> "Pralnia"
-    RoomIcon.Pantry -> "Spiżarnia"
-    RoomIcon.Basement -> "Piwnica"
-    RoomIcon.Attic -> "Poddasze"
-    RoomIcon.Balcony -> "Balkon"
-    RoomIcon.Terrace -> "Taras"
-    RoomIcon.Closet -> "Garderoba"
-    RoomIcon.Nursery -> "Pokój Dziecięcy"
-    RoomIcon.GuestRoom -> "Pokój Gościnny"
-    RoomIcon.Storage -> "Magazyn"
-    RoomIcon.Gym -> "Siłownia"
-    RoomIcon.Workshop -> "Warsztat"
-    RoomIcon.Garden -> "Ogród"
-    RoomIcon.Toilet -> "Toaleta"
+fun RoomType.toText(): String = when (this) {
+    RoomType.Default -> "Pokój"
+    RoomType.Kitchen -> "Kuchnia"
+    RoomType.Bedroom -> "Sypialnia"
+    RoomType.Bathroom -> "Łazienka"
+    RoomType.LivingRoom -> "Salon"
+    RoomType.DiningRoom -> "Jadalnia"
+    RoomType.Hallway -> "Korytarz"
+    RoomType.Office -> "Biuro"
+    RoomType.Garage -> "Garaż"
+    RoomType.Laundry -> "Pralnia"
+    RoomType.Pantry -> "Spiżarnia"
+    RoomType.Basement -> "Piwnica"
+    RoomType.Attic -> "Poddasze"
+    RoomType.Balcony -> "Balkon"
+    RoomType.Terrace -> "Taras"
+    RoomType.Closet -> "Garderoba"
+    RoomType.Nursery -> "Pokój Dziecięcy"
+    RoomType.GuestRoom -> "Pokój Gościnny"
+    RoomType.Storage -> "Magazyn"
+    RoomType.Gym -> "Siłownia"
+    RoomType.Workshop -> "Warsztat"
+    RoomType.Garden -> "Ogród"
+    RoomType.Toilet -> "Toaleta"
 }
