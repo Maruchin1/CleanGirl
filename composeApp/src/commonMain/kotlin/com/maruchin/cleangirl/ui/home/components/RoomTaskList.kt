@@ -38,40 +38,48 @@ fun RoomTaskList(
         stickyHeader {
             TaskListHeader(text = "Dzisiaj", modifier = Modifier.animateItem())
         }
-        items(todayTasks, key = { it.id }) { task ->
-            DailyTaskItem(
-                task = task,
-                isPlannedForToday = true,
-                onCompletedChange = { completed ->
-                    val taskCompletionToggle = TaskCompletionToggle(
-                        roomId = room.id,
-                        taskId = task.id,
-                        date = date,
-                        completed = completed
-                    )
-                    onTaskCompleteChange(taskCompletionToggle)
-                },
-                modifier = Modifier.animateItem().padding(bottom = 8.dp)
-            )
+        if (todayTasks.isNotEmpty()) {
+            items(todayTasks, key = { it.id }) { task ->
+                DailyTaskItem(
+                    task = task,
+                    isPlannedForToday = true,
+                    onCompletedChange = { completed ->
+                        val taskCompletionToggle = TaskCompletionToggle(
+                            roomId = room.id,
+                            taskId = task.id,
+                            date = date,
+                            completed = completed
+                        )
+                        onTaskCompleteChange(taskCompletionToggle)
+                    },
+                    modifier = Modifier.animateItem().padding(bottom = 8.dp)
+                )
+            }
+        } else {
+            item {
+                NoTasksForTodayInfo()
+            }
         }
-        stickyHeader {
-            TaskListHeader(text = "Pozostałe", modifier = Modifier.animateItem())
-        }
-        items(otherTasks, key = { it.id }) { task ->
-            DailyTaskItem(
-                task = task,
-                isPlannedForToday = false,
-                onCompletedChange = { completed ->
-                    val taskCompletionToggle = TaskCompletionToggle(
-                        roomId = room.id,
-                        taskId = task.id,
-                        date = date,
-                        completed = completed
-                    )
-                    onTaskCompleteChange(taskCompletionToggle)
-                },
-                modifier = Modifier.animateItem().padding(bottom = 8.dp)
-            )
+        if (otherTasks.isNotEmpty()) {
+            stickyHeader {
+                TaskListHeader(text = "Pozostałe", modifier = Modifier.animateItem())
+            }
+            items(otherTasks, key = { it.id }) { task ->
+                DailyTaskItem(
+                    task = task,
+                    isPlannedForToday = false,
+                    onCompletedChange = { completed ->
+                        val taskCompletionToggle = TaskCompletionToggle(
+                            roomId = room.id,
+                            taskId = task.id,
+                            date = date,
+                            completed = completed
+                        )
+                        onTaskCompleteChange(taskCompletionToggle)
+                    },
+                    modifier = Modifier.animateItem().padding(bottom = 8.dp)
+                )
+            }
         }
     }
 }
