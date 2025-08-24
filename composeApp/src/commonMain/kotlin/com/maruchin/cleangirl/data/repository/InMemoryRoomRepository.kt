@@ -1,6 +1,7 @@
 package com.maruchin.cleangirl.data.repository
 
 import com.maruchin.cleangirl.data.model.NewRoom
+import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.UpdatedRoom
@@ -43,6 +44,15 @@ class InMemoryRoomRepository private constructor() : RoomRepository {
 
     override suspend fun deleteRoom(roomId: String) {
         roomState.update { it - roomId }
+    }
+
+    override suspend fun addTask(roomId: String, newTask: NewTask) {
+        val room = roomState.value[roomId]
+        checkNotNull(room) { "Room with id $room not found" }
+        val romWithNewTask = room.addTask(newTask)
+        roomState.update {
+            it + (romWithNewTask.id to romWithNewTask)
+        }
     }
 
     companion object {

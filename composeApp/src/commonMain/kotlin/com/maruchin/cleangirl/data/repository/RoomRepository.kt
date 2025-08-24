@@ -1,6 +1,7 @@
 package com.maruchin.cleangirl.data.repository
 
 import com.maruchin.cleangirl.data.model.NewRoom
+import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.UpdatedRoom
@@ -17,4 +18,6 @@ interface RoomRepository {
     suspend fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle)
 
     suspend fun deleteRoom(roomId: String)
+
+    suspend fun addTask(roomId: String, newTask: NewTask)
 }

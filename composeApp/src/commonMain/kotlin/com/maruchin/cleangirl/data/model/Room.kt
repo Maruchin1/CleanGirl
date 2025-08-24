@@ -38,6 +38,10 @@ data class Room(
         return copy(tasks = updatedTasks)
     }
 
+    fun addTask(newTask: NewTask): Room = copy(
+        tasks = tasks + Task.from(newTask)
+    )
+
     companion object {
 
         @OptIn(ExperimentalUuidApi::class)
