@@ -36,7 +36,7 @@ fun RoomTaskList(
         contentPadding = PaddingValues(16.dp),
     ) {
         stickyHeader {
-            TaskListHeader(text = "Dzisiaj")
+            TaskListHeader(text = "Dzisiaj", modifier = Modifier.animateItem())
         }
         items(todayTasks, key = { it.id }) { task ->
             DailyTaskItem(
@@ -51,11 +51,11 @@ fun RoomTaskList(
                     )
                     onTaskCompleteChange(taskCompletionToggle)
                 },
-                modifier = Modifier.animateItem().padding(top = 8.dp)
+                modifier = Modifier.animateItem().padding(bottom = 8.dp)
             )
         }
         stickyHeader {
-            TaskListHeader(text = "Pozostałe", modifier = Modifier.padding(top = 24.dp))
+            TaskListHeader(text = "Pozostałe", modifier = Modifier.animateItem())
         }
         items(otherTasks, key = { it.id }) { task ->
             DailyTaskItem(
@@ -70,7 +70,7 @@ fun RoomTaskList(
                     )
                     onTaskCompleteChange(taskCompletionToggle)
                 },
-                modifier = Modifier.animateItem().padding(top = 8.dp)
+                modifier = Modifier.animateItem().padding(bottom = 8.dp)
             )
         }
     }
