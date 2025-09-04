@@ -4,7 +4,14 @@ import kotlinx.datetime.DayOfWeek
 
 sealed interface Recurrence {
 
-    data class Daily(val timesOfDay: Set<TimeOfDay> = emptySet()) : Recurrence {
+    val isValid: Boolean
+        get() = when (this) {
+            is Daily -> timesOfDay.isNotEmpty()
+            is Weekly -> daysOfWeek.isNotEmpty()
+            is Monthly -> daysOfMoth.isNotEmpty()
+        }
+
+    data class Daily(val timesOfDay: Set<TimeOfDay>) : Recurrence {
 
         fun toggleTimeOfDay(timeOfDay: TimeOfDay): Daily {
             return if (timesOfDay.contains(timeOfDay)) {
@@ -13,9 +20,14 @@ sealed interface Recurrence {
                 this.copy(timesOfDay = timesOfDay + timeOfDay)
             }
         }
+
+        companion object {
+
+            val default = Daily(setOf(TimeOfDay.MORNING))
+        }
     }
 
-    data class Weekly(val daysOfWeek: Set<DayOfWeek> = emptySet()) : Recurrence {
+    data class Weekly(val daysOfWeek: Set<DayOfWeek>) : Recurrence {
 
         fun toggleDayOfWeek(dayOfWeek: DayOfWeek): Weekly {
             return if (daysOfWeek.contains(dayOfWeek)) {
@@ -24,9 +36,14 @@ sealed interface Recurrence {
                 this.copy(daysOfWeek = daysOfWeek + dayOfWeek)
             }
         }
+
+        companion object {
+
+            val default = Weekly(setOf(DayOfWeek.MONDAY))
+        }
     }
 
-    data class Monthly(val daysOfMoth: Set<Int> = emptySet()) : Recurrence {
+    data class Monthly(val daysOfMoth: Set<Int>) : Recurrence {
 
         fun toggleDayOfMonth(dayOfMonth: Int): Monthly {
             return if (daysOfMoth.contains(dayOfMonth)) {
@@ -34,6 +51,11 @@ sealed interface Recurrence {
             } else {
                 this.copy(daysOfMoth = daysOfMoth + dayOfMonth)
             }
+        }
+
+        companion object {
+
+            val default = Monthly(setOf(1))
         }
     }
 }

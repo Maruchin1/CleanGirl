@@ -3,8 +3,7 @@ package com.maruchin.cleangirl.data.model
 import kotlinx.datetime.LocalDate
 
 data class DailyTask(
-    val id: String,
-    val name: String,
+    val task: Task,
     val isCompleted: Boolean,
     val lastCompleted: LocalDate?,
     val nextPlanned: LocalDate?,
@@ -13,14 +12,13 @@ data class DailyTask(
     companion object {
 
         fun fromTask(task: Task, date: LocalDate) = DailyTask(
-            id = task.id,
-            name = task.name,
+            task = task,
             isCompleted = task.isCompleted(date),
             lastCompleted = task.lastCompleted(date),
             nextPlanned = task.nextPlanned(date),
         )
 
         val comparator = compareBy<DailyTask> { it.isCompleted }
-            .thenBy { it.name.lowercase() }
+            .thenBy { it.task.name.lowercase() }
     }
 }

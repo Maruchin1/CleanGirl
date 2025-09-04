@@ -42,6 +42,17 @@ data class Room(
         tasks = tasks + Task.from(newTask)
     )
 
+    fun updateTask(updatedTask: UpdatedTask): Room {
+        val updatedTasks = tasks.map { task ->
+            if (task.id == updatedTask.id) {
+                task.copy(name = updatedTask.name, recurrence = updatedTask.recurrence)
+            } else {
+                task
+            }
+        }
+        return copy(tasks = updatedTasks)
+    }
+
     companion object {
 
         @OptIn(ExperimentalUuidApi::class)

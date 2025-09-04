@@ -60,7 +60,10 @@ fun HomeToolbar(
     }
 
     if (isAddingTask && currentRoom != null) {
-        TaskEditorBottomSheet(roomId = currentRoom.id, onClose = { isAddingTask = false })
+        TaskEditorBottomSheet(
+            room = currentRoom,
+            task = null,
+            onClose = { isAddingTask = false })
     }
     if (isEditingRoom) {
         RoomEditorBottomSheet(room = currentRoom, onClose = { isEditingRoom = false })

@@ -39,18 +39,18 @@ fun RoomTaskList(
             TaskListHeader(text = "Dzisiaj", modifier = Modifier.animateItem())
         }
         if (todayTasks.isNotEmpty()) {
-            items(todayTasks, key = { it.id }) { task ->
+            items(todayTasks, key = { it.task.id }) { task ->
                 DailyTaskItem(
+                    room = room,
                     task = task,
                     isPlannedForToday = true,
                     onCompletedChange = { completed ->
-                        val taskCompletionToggle = TaskCompletionToggle(
+                        TaskCompletionToggle(
                             roomId = room.id,
-                            taskId = task.id,
+                            taskId = task.task.id,
                             date = date,
                             completed = completed
-                        )
-                        onTaskCompleteChange(taskCompletionToggle)
+                        ).let(onTaskCompleteChange)
                     },
                     modifier = Modifier.animateItem().padding(bottom = 8.dp)
                 )
@@ -64,14 +64,15 @@ fun RoomTaskList(
             stickyHeader {
                 TaskListHeader(text = "Pozostałe", modifier = Modifier.animateItem())
             }
-            items(otherTasks, key = { it.id }) { task ->
+            items(otherTasks, key = { it.task.id }) { task ->
                 DailyTaskItem(
+                    room = room,
                     task = task,
                     isPlannedForToday = false,
                     onCompletedChange = { completed ->
                         val taskCompletionToggle = TaskCompletionToggle(
                             roomId = room.id,
-                            taskId = task.id,
+                            taskId = task.task.id,
                             date = date,
                             completed = completed
                         )

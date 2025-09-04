@@ -5,6 +5,7 @@ import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.UpdatedRoom
+import com.maruchin.cleangirl.data.model.UpdatedTask
 import com.maruchin.cleangirl.data.model.sampleRoomList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,6 +53,15 @@ class InMemoryRoomRepository private constructor() : RoomRepository {
         val romWithNewTask = room.addTask(newTask)
         roomState.update {
             it + (romWithNewTask.id to romWithNewTask)
+        }
+    }
+
+    override suspend fun updateTask(roomId: String, updatedTask: UpdatedTask) {
+        val room = roomState.value[roomId]
+        checkNotNull(room) { "Room with id $room not found" }
+        val romWithUpdatedTask = room.updateTask(updatedTask)
+        roomState.update {
+            it + (romWithUpdatedTask.id to romWithUpdatedTask)
         }
     }
 

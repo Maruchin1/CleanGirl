@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TaskEditorTopBar(onSave: () -> Unit) {
+fun TaskEditorTopBar(canSave: Boolean, onSave: () -> Unit) {
     Row(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -24,7 +24,7 @@ fun TaskEditorTopBar(onSave: () -> Unit) {
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.weight(1f)
         )
-        Button(onClick = onSave) {
+        Button(onClick = onSave, enabled = canSave) {
             Icon(imageVector = Icons.Rounded.Check, contentDescription = null)
         }
     }

@@ -5,6 +5,7 @@ import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import com.maruchin.cleangirl.data.model.UpdatedRoom
+import com.maruchin.cleangirl.data.model.UpdatedTask
 import kotlinx.coroutines.flow.Flow
 
 interface RoomRepository {
@@ -20,4 +21,6 @@ interface RoomRepository {
     suspend fun deleteRoom(roomId: String)
 
     suspend fun addTask(roomId: String, newTask: NewTask)
+
+    suspend fun updateTask(roomId: String, updatedTask: UpdatedTask)
 }

@@ -15,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Recurrence
+import com.maruchin.cleangirl.data.model.Room
+import com.maruchin.cleangirl.data.model.Task
+import com.maruchin.cleangirl.data.model.UpdatedTask
 import com.maruchin.cleangirl.ui.taskeditor.components.RecurrenceSelector
 import com.maruchin.cleangirl.ui.taskeditor.components.RecurrenceSelectorState
 import com.maruchin.cleangirl.ui.taskeditor.components.TaskEditorTopBar
@@ -26,19 +29,26 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEditorBottomSheet(roomId: String, onClose: () -> Unit) {
+fun TaskEditorBottomSheet(room: Room, task: Task?, onClose: () -> Unit) {
     val sheetState = rememberModalBottomSheetState()
-    val viewModel = viewModel { TaskEditorViewModel(roomId) }
+    val viewModel = viewModel { TaskEditorViewModel(room) }
     val scope = rememberCoroutineScope()
+
+    fun hideAndClose() = scope.launch {
+        sheetState.hide()
+        onClose()
+    }
 
     ModalBottomSheet(onDismissRequest = onClose, sheetState = sheetState) {
         TaskEditorContent(
-            onAddTask = {
-                viewModel.saveTask(it)
-                scope.launch {
-                    sheetState.hide()
-                    onClose()
-                }
+            task = task,
+            onAddTask = { newTask ->
+                viewModel.addTask(newTask)
+                hideAndClose()
+            },
+            onUpdateTask = { updatedTask ->
+                viewModel.updateTask(updatedTask)
+                hideAndClose()
             }
         )
     }
@@ -47,18 +57,32 @@ fun TaskEditorBottomSheet(roomId: String, onClose: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskEditorContent(
+    task: Task?,
     onAddTask: (NewTask) -> Unit,
-    taskName: TextFieldState = rememberTextFieldState(),
-    recurrenceSelectorState: RecurrenceSelectorState = rememberRecurrenceSelectorState()
+    onUpdateTask: (UpdatedTask) -> Unit,
+    taskName: TextFieldState = rememberTextFieldState(task?.name.orEmpty()),
+    recurrenceSelectorState: RecurrenceSelectorState = rememberRecurrenceSelectorState(
+        task?.recurrence ?: Recurrence.Daily.default
+    )
 ) {
     Surface(color = BottomSheetDefaults.ContainerColor) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TaskEditorTopBar(
+                canSave = taskName.text.isNotBlank() &&
+                        recurrenceSelectorState.selectedRecurrence.isValid,
                 onSave = {
-                    NewTask(
-                        name = taskName.text.toString(),
-                        recurrence = recurrenceSelectorState.selectedRecurrence
-                    ).let(onAddTask)
+                    if (task == null) {
+                        NewTask(
+                            name = taskName.text.toString(),
+                            recurrence = recurrenceSelectorState.selectedRecurrence
+                        ).let(onAddTask)
+                    } else {
+                        UpdatedTask(
+                            id = task.id,
+                            name = taskName.text.toString(),
+                            recurrence = recurrenceSelectorState.selectedRecurrence
+                        ).let(onUpdateTask)
+                    }
                 }
             )
             TaskNameField(taskName = taskName)
@@ -72,8 +96,10 @@ fun TaskEditorContent(
 fun TaskEditorContentPreview_Daily() {
     CleanGirlTheme {
         TaskEditorContent(
+            task = null,
             onAddTask = {},
-            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Daily())
+            onUpdateTask = {},
+            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Daily.default)
         )
     }
 }
@@ -83,8 +109,10 @@ fun TaskEditorContentPreview_Daily() {
 fun TaskEditorContentPreview_Weekly() {
     CleanGirlTheme {
         TaskEditorContent(
+            task = null,
             onAddTask = {},
-            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Weekly())
+            onUpdateTask = {},
+            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Weekly.default)
         )
     }
 }
@@ -94,8 +122,10 @@ fun TaskEditorContentPreview_Weekly() {
 fun TaskEditorContentPreview_Monthly() {
     CleanGirlTheme {
         TaskEditorContent(
+            task = null,
             onAddTask = {},
-            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Monthly())
+            onUpdateTask = {},
+            recurrenceSelectorState = rememberRecurrenceSelectorState(Recurrence.Monthly.default)
         )
     }
 }

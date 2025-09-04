@@ -13,9 +13,9 @@ import kotlinx.datetime.DayOfWeek
 @Stable
 class RecurrenceSelectorState(recurrence: Recurrence) {
 
-    private var daily by mutableStateOf(Recurrence.Daily())
-    private var weekly by mutableStateOf(Recurrence.Weekly())
-    private var monthly by mutableStateOf(Recurrence.Monthly())
+    private var daily by mutableStateOf(Recurrence.Daily.default)
+    private var weekly by mutableStateOf(Recurrence.Weekly.default)
+    private var monthly by mutableStateOf(Recurrence.Monthly.default)
 
     var selectedRecurrence: Recurrence by mutableStateOf(recurrence)
         private set
@@ -72,6 +72,6 @@ class RecurrenceSelectorState(recurrence: Recurrence) {
 }
 
 @Composable
-fun rememberRecurrenceSelectorState(recurrence: Recurrence = Recurrence.Daily()): RecurrenceSelectorState {
+fun rememberRecurrenceSelectorState(recurrence: Recurrence = Recurrence.Daily.default): RecurrenceSelectorState {
     return remember(recurrence) { RecurrenceSelectorState(recurrence) }
 }
