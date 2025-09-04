@@ -1,25 +1,23 @@
-package com.maruchin.cleangirl.ui.roomeditor.components
+package com.maruchin.cleangirl.ui.taskeditor.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldLabelPosition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.maruchin.cleangirl.data.model.RoomType
-import com.maruchin.cleangirl.ui.utils.toImageVector
 
 @Composable
-fun RoomNameField(roomName: TextFieldState, roomType: RoomType, modifier: Modifier = Modifier) {
+fun TaskNameField(taskName: TextFieldState, modifier: Modifier = Modifier) {
     TextField(
-        state = roomName,
-        labelPosition = TextFieldLabelPosition.Above(),
-        leadingIcon = {
-            Icon(imageVector = roomType.toImageVector(), contentDescription = null)
+        state = taskName,
+        placeholder = {
+            Text(text = "Co masz do zrobienia?")
         },
+        labelPosition = TextFieldLabelPosition.Above(),
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .fillMaxWidth()

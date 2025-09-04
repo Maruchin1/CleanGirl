@@ -28,6 +28,11 @@ kotlin {
             isStatic = true
         }
     }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+        freeCompilerArgs.add("-Xcontext-sensitive-resolution")
+    }
     
     sourceSets {
         androidMain.dependencies {

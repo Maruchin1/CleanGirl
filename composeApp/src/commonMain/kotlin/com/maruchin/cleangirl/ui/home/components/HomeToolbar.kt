@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.ui.roomeditor.RoomEditorBottomSheet
+import com.maruchin.cleangirl.ui.taskeditor.TaskEditorBottomSheet
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -29,6 +30,7 @@ fun HomeToolbar(
     scrollBehavior: FloatingToolbarScrollBehavior,
     modifier: Modifier = Modifier
 ) {
+    var isAddingTask by rememberSaveable { mutableStateOf(false) }
     var isEditingRoom by rememberSaveable { mutableStateOf(false) }
 
     HorizontalFloatingToolbar(
@@ -41,7 +43,7 @@ fun HomeToolbar(
         scrollBehavior = scrollBehavior,
         modifier = modifier
     ) {
-        IconButton(onClick = {}) {
+        IconButton(onClick = { isAddingTask = true }) {
             Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
         }
         AnimatedVisibility(visible = currentRoom != null) {
@@ -57,6 +59,9 @@ fun HomeToolbar(
         }
     }
 
+    if (isAddingTask && currentRoom != null) {
+        TaskEditorBottomSheet(roomId = currentRoom.id, onClose = { isAddingTask = false })
+    }
     if (isEditingRoom) {
         RoomEditorBottomSheet(room = currentRoom, onClose = { isEditingRoom = false })
     }

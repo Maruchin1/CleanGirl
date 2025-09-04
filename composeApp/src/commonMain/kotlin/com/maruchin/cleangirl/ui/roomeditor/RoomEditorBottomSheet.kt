@@ -2,7 +2,6 @@ package com.maruchin.cleangirl.ui.roomeditor
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.BottomSheetDefaults
@@ -10,13 +9,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.maruchin.cleangirl.data.model.NewRoom
 import com.maruchin.cleangirl.data.model.Room
@@ -29,27 +29,35 @@ import com.maruchin.cleangirl.ui.roomeditor.components.RoomNameField
 import com.maruchin.cleangirl.ui.roomeditor.components.RoomTypeSelector
 import com.maruchin.cleangirl.ui.theme.CleanGirlTheme
 import com.maruchin.cleangirl.ui.utils.toText
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoomEditorBottomSheet(room: Room?, onClose: () -> Unit) {
     val viewModel = viewModel { RoomEditorViewModel() }
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
 
-    ModalBottomSheet(onDismissRequest = onClose) {
+    fun hideAndClose() = scope.launch {
+        sheetState.hide()
+        onClose()
+    }
+
+    ModalBottomSheet(sheetState = sheetState, onDismissRequest = onClose) {
         RoomEditorContent(
             room = room,
             onAdd = { newRoom ->
                 viewModel.addRoom(newRoom)
-                onClose()
+                hideAndClose()
             },
             onEdit = { updatedRoom ->
                 viewModel.updateRoom(updatedRoom)
-                onClose()
+                hideAndClose()
             },
             onDelete = { room ->
                 viewModel.deleteRoom(room)
-                onClose()
+                hideAndClose()
             }
         )
     }
@@ -92,7 +100,6 @@ private fun RoomEditorContent(
             RoomNameField(
                 roomName = roomName,
                 roomType = roomType,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
             )
             RoomTypeSelector(
                 onSelectRoom = {
