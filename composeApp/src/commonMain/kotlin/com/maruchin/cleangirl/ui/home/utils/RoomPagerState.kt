@@ -9,12 +9,12 @@ import androidx.compose.runtime.setValue
 import com.maruchin.cleangirl.data.model.Room
 
 @Composable
-fun rememberRoompagerState(rooms: List<Room>): PagerState {
+fun rememberRoomPagerState(rooms: List<Room>): PagerState {
     var previousRooms by remember { mutableStateOf(rooms) }
 
     return remember(rooms.size) {
         val initialPage = when {
-            rooms.size > previousRooms.size -> rooms.lastIndex
+            previousRooms.isNotEmpty() && rooms.size > previousRooms.size -> rooms.lastIndex
             else -> 0
         }
         previousRooms = rooms

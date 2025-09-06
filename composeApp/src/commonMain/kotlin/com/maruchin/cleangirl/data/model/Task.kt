@@ -53,12 +53,10 @@ data class Task(
         }
     )
 
-    fun isPlannedFor(date: LocalDate): Boolean {
-        return when (recurrence) {
-            is Recurrence.Daily -> recurrence.timesOfDay.isNotEmpty()
-            is Recurrence.Weekly -> recurrence.daysOfWeek.contains(date.dayOfWeek)
-            is Recurrence.Monthly -> recurrence.daysOfMoth.contains(date.day)
-        }
+    fun isPlannedFor(date: LocalDate): Boolean = when (recurrence) {
+        is Recurrence.Daily -> true
+        is Recurrence.Weekly -> recurrence.daysOfWeek.contains(date.dayOfWeek)
+        is Recurrence.Monthly -> recurrence.daysOfMoth.contains(date.day)
     }
 
     companion object {

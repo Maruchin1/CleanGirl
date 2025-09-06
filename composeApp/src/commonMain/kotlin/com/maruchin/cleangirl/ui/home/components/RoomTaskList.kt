@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.maruchin.cleangirl.data.model.DailyTasks
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.TaskCompletionToggle
 import kotlinx.datetime.LocalDate
@@ -22,11 +23,8 @@ fun RoomTaskList(
     onTaskCompleteChange: (TaskCompletionToggle) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val todayTasks = remember(room, date) {
-        room.getTasksFor(date)
-    }
-    val otherTasks = remember(room, date) {
-        room.getTasksNotFor(date)
+    val dailyTasks = remember(room, date) {
+        DailyTasks.from(room.tasks, date)
     }
 
     LazyColumn(
@@ -35,11 +33,11 @@ fun RoomTaskList(
             .then(modifier),
         contentPadding = PaddingValues(16.dp),
     ) {
-        stickyHeader {
-            TaskListHeader(text = "Dzisiaj", modifier = Modifier.animateItem())
-        }
-        if (todayTasks.isNotEmpty()) {
-            items(todayTasks, key = { it.task.id }) { task ->
+        if (dailyTasks.today.isNotEmpty()) {
+            stickyHeader {
+                TaskListHeader(text = "Dzisiaj", modifier = Modifier.animateItem())
+            }
+            items(dailyTasks.today, key = { it.task.id }) { task ->
                 DailyTaskItem(
                     room = room,
                     task = task,
@@ -55,29 +53,17 @@ fun RoomTaskList(
                     modifier = Modifier.animateItem().padding(bottom = 8.dp)
                 )
             }
-        } else {
-            item {
-                NoTasksForTodayInfo()
-            }
         }
-        if (otherTasks.isNotEmpty()) {
+        if (dailyTasks.other.isNotEmpty()) {
             stickyHeader {
                 TaskListHeader(text = "Pozostałe", modifier = Modifier.animateItem())
             }
-            items(otherTasks, key = { it.task.id }) { task ->
+            items(dailyTasks.other, key = { it.task.id }) { task ->
                 DailyTaskItem(
                     room = room,
                     task = task,
                     isPlannedForToday = false,
-                    onCompletedChange = { completed ->
-                        val taskCompletionToggle = TaskCompletionToggle(
-                            roomId = room.id,
-                            taskId = task.task.id,
-                            date = date,
-                            completed = completed
-                        )
-                        onTaskCompleteChange(taskCompletionToggle)
-                    },
+                    onCompletedChange = {},
                     modifier = Modifier.animateItem().padding(bottom = 8.dp)
                 )
             }

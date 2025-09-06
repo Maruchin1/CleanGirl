@@ -22,9 +22,6 @@ fun HomeTopBar(
                 Text(text = "Witaj ${user.name}")
             }
         },
-        subtitle = {
-            Text(text = "Lorem ipsum dolor sit amet")
-        },
         actions = {
             DateSelector(datePickerState)
         },

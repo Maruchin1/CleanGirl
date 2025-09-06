@@ -31,7 +31,7 @@ import com.maruchin.cleangirl.ui.home.components.HomeToolbar
 import com.maruchin.cleangirl.ui.home.components.HomeTopBar
 import com.maruchin.cleangirl.ui.home.components.RoomSelector
 import com.maruchin.cleangirl.ui.home.components.RoomTaskList
-import com.maruchin.cleangirl.ui.home.utils.rememberRoompagerState
+import com.maruchin.cleangirl.ui.home.utils.rememberRoomPagerState
 import com.maruchin.cleangirl.ui.theme.CleanGirlTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -49,7 +49,7 @@ fun HomeScreen(state: HomeUiState, onTaskCompleteChange: (TaskCompletionToggle) 
         exitDirection = FloatingToolbarExitDirection.Bottom
     )
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentTimeMillis)
-    val roomPagerState = rememberRoompagerState(state.rooms)
+    val roomPagerState = rememberRoomPagerState(state.rooms)
     val scope = rememberCoroutineScope()
 
     val date by remember {

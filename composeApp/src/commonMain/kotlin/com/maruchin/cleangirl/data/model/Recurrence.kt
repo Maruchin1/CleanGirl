@@ -1,61 +1,29 @@
 package com.maruchin.cleangirl.data.model
 
+import com.maruchin.cleangirl.core.utils.toggle
 import kotlinx.datetime.DayOfWeek
 
 sealed interface Recurrence {
 
     val isValid: Boolean
         get() = when (this) {
-            is Daily -> timesOfDay.isNotEmpty()
+            is Daily -> true
             is Weekly -> daysOfWeek.isNotEmpty()
             is Monthly -> daysOfMoth.isNotEmpty()
         }
 
-    data class Daily(val timesOfDay: Set<TimeOfDay>) : Recurrence {
+    data object Daily : Recurrence
 
-        fun toggleTimeOfDay(timeOfDay: TimeOfDay): Daily {
-            return if (timesOfDay.contains(timeOfDay)) {
-                this.copy(timesOfDay = timesOfDay - timeOfDay)
-            } else {
-                this.copy(timesOfDay = timesOfDay + timeOfDay)
-            }
-        }
+    data class Weekly(val daysOfWeek: Set<DayOfWeek> = emptySet()) : Recurrence {
 
-        companion object {
+        fun toggleDayOfWeek(dayOfWeek: DayOfWeek): Weekly =
+            copy(daysOfWeek = daysOfWeek.toggle(dayOfWeek))
 
-            val default = Daily(setOf(TimeOfDay.MORNING))
-        }
     }
 
-    data class Weekly(val daysOfWeek: Set<DayOfWeek>) : Recurrence {
+    data class Monthly(val daysOfMoth: Set<Int> = emptySet()) : Recurrence {
 
-        fun toggleDayOfWeek(dayOfWeek: DayOfWeek): Weekly {
-            return if (daysOfWeek.contains(dayOfWeek)) {
-                this.copy(daysOfWeek = daysOfWeek - dayOfWeek)
-            } else {
-                this.copy(daysOfWeek = daysOfWeek + dayOfWeek)
-            }
-        }
-
-        companion object {
-
-            val default = Weekly(setOf(DayOfWeek.MONDAY))
-        }
-    }
-
-    data class Monthly(val daysOfMoth: Set<Int>) : Recurrence {
-
-        fun toggleDayOfMonth(dayOfMonth: Int): Monthly {
-            return if (daysOfMoth.contains(dayOfMonth)) {
-                this.copy(daysOfMoth = daysOfMoth - dayOfMonth)
-            } else {
-                this.copy(daysOfMoth = daysOfMoth + dayOfMonth)
-            }
-        }
-
-        companion object {
-
-            val default = Monthly(setOf(1))
-        }
+        fun toggleDayOfMonth(dayOfMonth: Int): Monthly =
+            copy(daysOfMoth = daysOfMoth.toggle(dayOfMonth))
     }
 }

@@ -12,16 +12,6 @@ data class Room(
     val tasks: List<Task> = emptyList()
 ) {
 
-    fun getTasksFor(date: LocalDate): List<DailyTask> {
-        return tasks.filter { it.isPlannedFor(date) }
-            .map { DailyTask.fromTask(it, date) }
-            .sortedWith(DailyTask.comparator)
-    }
-
-    fun getTasksNotFor(date: LocalDate): List<DailyTask> {
-        return tasks.filter { !it.isPlannedFor(date) }.map { DailyTask.fromTask(it, date) }
-    }
-
     fun update(updatedRoom: UpdatedRoom): Room = copy(
         name = updatedRoom.name,
         icon = updatedRoom.type
@@ -158,9 +148,7 @@ val sampleRoomBedroom = Room(
         Task(
             id = "4",
             name = "Zrobić łóżko",
-            recurrence = Recurrence.Daily(
-                timesOfDay = setOf(TimeOfDay.MORNING)
-            ),
+            recurrence = Recurrence.Daily,
             records = listOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)
@@ -180,9 +168,7 @@ val sampleRoomBedroom = Room(
         Task(
             id = "6",
             name = "Przewietrzyć pokój",
-            recurrence = Recurrence.Daily(
-                timesOfDay = setOf(TimeOfDay.EVENING)
-            ),
+            recurrence = Recurrence.Daily,
             records = listOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)
@@ -199,9 +185,7 @@ val sampleRoomKitchen = Room(
         Task(
             id = "7",
             name = "Umyć naczynia",
-            recurrence = Recurrence.Daily(
-                timesOfDay = setOf(TimeOfDay.AFTERNOON)
-            ),
+            recurrence = Recurrence.Daily,
             records = listOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)

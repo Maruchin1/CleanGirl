@@ -14,29 +14,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maruchin.cleangirl.data.model.Recurrence
-import com.maruchin.cleangirl.data.model.TimeOfDay
+import com.maruchin.cleangirl.ui.taskeditor.TaskEditorFormState
 import com.maruchin.cleangirl.ui.utils.toText
 import kotlinx.datetime.DayOfWeek
 
 @Composable
-fun RecurrenceSelector(
-    modifier: Modifier = Modifier,
-    state: RecurrenceSelectorState = rememberRecurrenceSelectorState()
-) {
+fun RecurrenceSelector(formState: TaskEditorFormState, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
-        RecurrenceTypeSelector(state = state)
-        AnimatedContent(state.selectedRecurrence::class) { recurrenceType ->
+        RecurrenceTypeSelector(formState = formState)
+        AnimatedContent(formState.recurrence::class) { recurrenceType ->
             when (recurrenceType) {
-                Recurrence.Daily::class -> TimeOfDaySelector(state = state)
-                Recurrence.Weekly::class -> DayOfWeekSelector(state = state)
-                Recurrence.Monthly::class -> DayOfMonthSelector(state = state)
+                Recurrence.Daily::class -> Unit
+                Recurrence.Weekly::class -> DayOfWeekSelector(formState = formState)
+                Recurrence.Monthly::class -> DayOfMonthSelector(formState = formState)
             }
         }
     }
 }
 
 @Composable
-private fun RecurrenceTypeSelector(state: RecurrenceSelectorState) {
+private fun RecurrenceTypeSelector(formState: TaskEditorFormState) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -47,22 +44,22 @@ private fun RecurrenceTypeSelector(state: RecurrenceSelectorState) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             FilterChip(
-                selected = state.isDailySelected,
-                onClick = { state.selectDaily() },
+                selected = formState.isDailySelected,
+                onClick = { formState.selectDaily() },
                 label = {
                     Text(text = "Dziennie")
                 }
             )
             FilterChip(
-                selected = state.isWeeklySelected,
-                onClick = { state.selectWeekly() },
+                selected = formState.isWeeklySelected,
+                onClick = { formState.selectWeekly() },
                 label = {
                     Text(text = "Tygodniowo")
                 }
             )
             FilterChip(
-                selected = state.isMonthlySelected,
-                onClick = { state.selectMonthly() },
+                selected = formState.isMonthlySelected,
+                onClick = { formState.selectMonthly() },
                 label = {
                     Text(text = "Miesięcznie")
                 }
@@ -72,31 +69,7 @@ private fun RecurrenceTypeSelector(state: RecurrenceSelectorState) {
 }
 
 @Composable
-private fun TimeOfDaySelector(state: RecurrenceSelectorState) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Text(text = "Wybierz porę dnia", style = MaterialTheme.typography.titleMedium)
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            TimeOfDay.entries.forEach { timeOfDay ->
-                FilterChip(
-                    selected = state.isTimeOfDaySelected(timeOfDay),
-                    onClick = { state.toggleTimeOfDay(timeOfDay) },
-                    label = {
-                        Text(text = timeOfDay.toText())
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun DayOfWeekSelector(state: RecurrenceSelectorState) {
+private fun DayOfWeekSelector(formState: TaskEditorFormState) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -108,10 +81,8 @@ private fun DayOfWeekSelector(state: RecurrenceSelectorState) {
         ) {
             DayOfWeek.entries.forEach { dayOfWeek ->
                 FilterChip(
-                    selected = state.isDayOfWeekSelected(dayOfWeek),
-                    onClick = {
-                        state.toggleDayOfWeek(dayOfWeek)
-                    },
+                    selected = formState.isDayOfWeekSelected(dayOfWeek),
+                    onClick = { formState.toggleDayOfWeek(dayOfWeek) },
                     label = {
                         Text(text = dayOfWeek.toText())
                     }
@@ -122,7 +93,7 @@ private fun DayOfWeekSelector(state: RecurrenceSelectorState) {
 }
 
 @Composable
-private fun DayOfMonthSelector(state: RecurrenceSelectorState) {
+private fun DayOfMonthSelector(formState: TaskEditorFormState) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -142,8 +113,8 @@ private fun DayOfMonthSelector(state: RecurrenceSelectorState) {
                 ) {
                     week.forEach { dayOfMonth ->
                         FilterChip(
-                            selected = state.isDayOfMonthSelected(dayOfMonth),
-                            onClick = { state.toggleDayOfMonth(dayOfMonth) },
+                            selected = formState.isDayOfMonthSelected(dayOfMonth),
+                            onClick = { formState.toggleDayOfMonth(dayOfMonth) },
                             label = {
                                 Text(text = dayOfMonth.toString())
                             }
