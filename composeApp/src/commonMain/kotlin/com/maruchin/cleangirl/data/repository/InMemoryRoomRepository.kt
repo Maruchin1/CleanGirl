@@ -65,6 +65,15 @@ class InMemoryRoomRepository private constructor() : RoomRepository {
         }
     }
 
+    override suspend fun deleteTask(roomId: String, taskId: String) {
+        val room = roomState.value[roomId]
+        checkNotNull(room) { "Room with id $room not found" }
+        val romWithUpdatedTask = room.deleteTask(taskId)
+        roomState.update {
+            it + (romWithUpdatedTask.id to romWithUpdatedTask)
+        }
+    }
+
     companion object {
 
         val instance by lazy { InMemoryRoomRepository() }

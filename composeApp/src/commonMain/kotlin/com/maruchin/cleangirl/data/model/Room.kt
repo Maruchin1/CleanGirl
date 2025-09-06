@@ -43,6 +43,10 @@ data class Room(
         return copy(tasks = updatedTasks)
     }
 
+    fun deleteTask(taskId: String): Room = copy(
+        tasks = tasks.filter { it.id != taskId }
+    )
+
     companion object {
 
         @OptIn(ExperimentalUuidApi::class)

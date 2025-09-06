@@ -45,6 +45,10 @@ fun TaskEditorBottomSheet(room: Room, task: Task?, onClose: () -> Unit) {
             onUpdateTask = { updatedTask ->
                 viewModel.updateTask(updatedTask)
                 hideAndClose()
+            },
+            onDeleteTask = { task ->
+                viewModel.deleteTask(task)
+                hideAndClose()
             }
         )
     }
@@ -56,6 +60,7 @@ fun TaskEditorContent(
     task: Task?,
     onAddTask: (NewTask) -> Unit,
     onUpdateTask: (UpdatedTask) -> Unit,
+    onDeleteTask: (Task) -> Unit,
     formState: TaskEditorFormState = rememberTaskEditorFormState(
         initialTaskName = task?.name.orEmpty(),
         initialRecurrence = task?.recurrence ?: Recurrence.Daily
@@ -64,6 +69,7 @@ fun TaskEditorContent(
     Surface(color = BottomSheetDefaults.ContainerColor) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TaskEditorTopBar(
+                task = task,
                 canSave = formState.isValid,
                 onSave = {
                     if (task == null) {
@@ -71,6 +77,9 @@ fun TaskEditorContent(
                     } else {
                         onUpdateTask(formState.createUpdatedTask(task))
                     }
+                },
+                onDelete = {
+                    task?.let(onDeleteTask)
                 }
             )
             TaskNameField(taskName = formState.taskName)
@@ -87,6 +96,7 @@ fun TaskEditorContentPreview_Daily() {
             task = null,
             onAddTask = {},
             onUpdateTask = {},
+            onDeleteTask = {},
             formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Daily)
         )
     }
@@ -100,6 +110,7 @@ fun TaskEditorContentPreview_Weekly() {
             task = null,
             onAddTask = {},
             onUpdateTask = {},
+            onDeleteTask = {},
             formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Weekly())
         )
     }
@@ -113,6 +124,7 @@ fun TaskEditorContentPreview_Monthly() {
             task = null,
             onAddTask = {},
             onUpdateTask = {},
+            onDeleteTask = {},
             formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Monthly())
         )
     }
