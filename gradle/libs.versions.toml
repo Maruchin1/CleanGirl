@@ -34,6 +34,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMaterial3" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebase" }
+firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebase" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 [plugins]

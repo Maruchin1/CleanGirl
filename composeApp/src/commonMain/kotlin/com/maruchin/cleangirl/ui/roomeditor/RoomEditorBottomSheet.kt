@@ -74,7 +74,7 @@ private fun RoomEditorContent(
     val roomName = rememberTextFieldState(
         initialText = room?.name ?: RoomType.Default.toText()
     )
-    var roomType by rememberSaveable(room) { mutableStateOf(room?.icon ?: RoomType.Default) }
+    var roomType by rememberSaveable(room) { mutableStateOf(room?.type ?: RoomType.Default) }
     var confirmRoomDeletion by rememberSaveable { mutableStateOf(false) }
 
     Surface(color = BottomSheetDefaults.ContainerColor) {
@@ -86,7 +86,7 @@ private fun RoomEditorContent(
                     if (room == null) {
                         NewRoom(
                             name = roomName.text.toString(),
-                            icon = roomType
+                            type = roomType
                         ).let(onAdd)
                     } else {
                         UpdatedRoom(

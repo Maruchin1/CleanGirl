@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.map
 class FirebaseUserRepository : UserRepository {
     private val auth = Firebase.auth
 
+    override val user: User?
+        get() = auth.currentUser?.toUser()
+
     override val userFlow: Flow<User?> =
         auth.authStateChanged.map { it?.toUser() }
 

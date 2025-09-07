@@ -59,7 +59,7 @@ private fun RoomChip(room: Room, isSelected: Boolean, onClick: () -> Unit) {
         selected = isSelected,
         onClick = onClick,
         label = { Text(text = room.name) },
-        leadingIcon = { Icon(imageVector = room.icon.toImageVector(), contentDescription = null) }
+        leadingIcon = { Icon(imageVector = room.type.toImageVector(), contentDescription = null) }
     )
 }
 

@@ -2,20 +2,13 @@ package com.maruchin.cleangirl.data.model
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 data class Room(
     val id: String,
     val name: String,
-    val icon: RoomType,
+    val type: RoomType,
     val tasks: List<Task> = emptyList()
 ) {
-
-    fun update(updatedRoom: UpdatedRoom): Room = copy(
-        name = updatedRoom.name,
-        icon = updatedRoom.type
-    )
 
     fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle): Room {
         val updatedTasks = tasks.map { task ->
@@ -46,23 +39,12 @@ data class Room(
     fun deleteTask(taskId: String): Room = copy(
         tasks = tasks.filter { it.id != taskId }
     )
-
-    companion object {
-
-        @OptIn(ExperimentalUuidApi::class)
-        fun from(newRoom: NewRoom) = Room(
-            id = Uuid.random().toString(),
-            name = newRoom.name,
-            icon = newRoom.icon,
-            tasks = emptyList()
-        )
-    }
 }
 
 val sampleRoomLivingRoom = Room(
     id = "living_room",
     name = "Salon",
-    icon = RoomType.LivingRoom,
+    type = RoomType.LivingRoom,
     tasks = listOf(
         Task(
             id = "1",
@@ -147,7 +129,7 @@ val sampleRoomLivingRoom = Room(
 val sampleRoomBedroom = Room(
     id = "bedroom",
     name = "Sypialnia",
-    icon = RoomType.Bedroom,
+    type = RoomType.Bedroom,
     tasks = listOf(
         Task(
             id = "4",
@@ -184,7 +166,7 @@ val sampleRoomBedroom = Room(
 val sampleRoomKitchen = Room(
     id = "kitchen",
     name = "Kuchnia",
-    icon = RoomType.Kitchen,
+    type = RoomType.Kitchen,
     tasks = listOf(
         Task(
             id = "7",
@@ -223,7 +205,7 @@ val sampleRoomKitchen = Room(
 val sampleRoomBathroom = Room(
     id = "bathroom",
     name = "Łazienka",
-    icon = RoomType.Bathroom,
+    type = RoomType.Bathroom,
     tasks = listOf(
         Task(
             id = "10",
