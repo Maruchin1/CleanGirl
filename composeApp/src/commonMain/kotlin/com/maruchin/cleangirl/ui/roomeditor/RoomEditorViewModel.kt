@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.maruchin.cleangirl.data.model.NewRoom
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.UpdatedRoom
-import com.maruchin.cleangirl.data.repository.InMemoryRoomRepository
+import com.maruchin.cleangirl.data.repository.FirebaseRoomRepository
 import com.maruchin.cleangirl.data.repository.RoomRepository
 import kotlinx.coroutines.launch
 
 class RoomEditorViewModel(
-    private val roomRepository: RoomRepository = InMemoryRoomRepository.instance
+    private val roomRepository: RoomRepository = FirebaseRoomRepository.instance
 ) : ViewModel() {
 
     fun addRoom(newRoom: NewRoom) = viewModelScope.launch {

@@ -17,7 +17,7 @@ fun UpdatedRoom.toFirebaseRoom() = FirebaseRoom(
 )
 
 fun DocumentSnapshot.toRoom(): Room {
-    val firebaseRoom = data(FirebaseRoom.serializer())
+    val firebaseRoom = data<FirebaseRoom>()
     return Room(
         id = id,
         name = firebaseRoom.name,
