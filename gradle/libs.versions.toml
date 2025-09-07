@@ -15,6 +15,9 @@ navigation-compose = "2.9.0-beta03"
 junit = "4.13.2"
 kotlin = "2.2.10"
 kotlinx-datetime = "0.7.1-0.6.x-compat"
+google-services = "4.4.3"
+firebase = "2.3.0"
+kermit = "2.0.8"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -30,6 +33,8 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMaterial3" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebase" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -38,3 +43,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "google-services" }

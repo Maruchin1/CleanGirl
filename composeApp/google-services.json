@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592044545343",
+    "project_id": "clean-girl-9f8e3",
+    "storage_bucket": "clean-girl-9f8e3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592044545343:android:53deff6fd1fbdada37ef8a",
+        "android_client_info": {
+          "package_name": "com.maruchin.cleangirl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlg2p1n3-xnV03aisV9GwwjYo3bSkUUew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,5 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    val userFlow: Flow<User>
+    val userFlow: Flow<User?>
+
+    suspend fun signInAnonymouslyIfNeeded()
 }
