@@ -22,11 +22,11 @@ import kotlinx.datetime.DayOfWeek
 fun RecurrenceSelector(formState: TaskEditorFormState, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         RecurrenceTypeSelector(formState = formState)
-        AnimatedContent(formState.recurrence::class) { recurrenceType ->
-            when (recurrenceType) {
-                Recurrence.Daily::class -> Unit
-                Recurrence.Weekly::class -> DayOfWeekSelector(formState = formState)
-                Recurrence.Monthly::class -> DayOfMonthSelector(formState = formState)
+        AnimatedContent(formState.recurrence) { recurrence ->
+            when (recurrence) {
+                Recurrence.Daily -> Unit
+                Recurrence.Weekly -> DayOfWeekSelector(formState = formState)
+                Recurrence.Monthly -> DayOfMonthSelector(formState = formState)
             }
         }
     }
@@ -44,22 +44,22 @@ private fun RecurrenceTypeSelector(formState: TaskEditorFormState) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             FilterChip(
-                selected = formState.isDailySelected,
-                onClick = { formState.selectDaily() },
+                selected = formState.recurrence == Recurrence.Daily,
+                onClick = { formState.recurrence = Recurrence.Daily },
                 label = {
                     Text(text = "Dziennie")
                 }
             )
             FilterChip(
-                selected = formState.isWeeklySelected,
-                onClick = { formState.selectWeekly() },
+                selected = formState.recurrence == Recurrence.Weekly,
+                onClick = { formState.recurrence = Recurrence.Weekly },
                 label = {
                     Text(text = "Tygodniowo")
                 }
             )
             FilterChip(
-                selected = formState.isMonthlySelected,
-                onClick = { formState.selectMonthly() },
+                selected = formState.recurrence == Recurrence.Monthly,
+                onClick = { formState.recurrence = Recurrence.Monthly },
                 label = {
                     Text(text = "Miesięcznie")
                 }

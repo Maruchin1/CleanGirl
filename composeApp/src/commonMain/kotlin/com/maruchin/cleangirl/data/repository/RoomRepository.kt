@@ -18,9 +18,9 @@ interface RoomRepository {
 
     suspend fun deleteRoom(roomId: String)
 
-    suspend fun addTask(roomId: String, newTask: NewTask)
+    suspend fun addTask(newTask: NewTask)
 
-    suspend fun updateTask(roomId: String, updatedTask: UpdatedTask)
+    suspend fun updateTask(updatedTask: UpdatedTask)
 
     suspend fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle)
 

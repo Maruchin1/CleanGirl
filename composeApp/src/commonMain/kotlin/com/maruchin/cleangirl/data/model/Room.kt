@@ -8,38 +8,7 @@ data class Room(
     val name: String,
     val type: RoomType,
     val tasks: List<Task> = emptyList()
-) {
-
-    fun toggleTaskCompleted(taskCompletionToggle: TaskCompletionToggle): Room {
-        val updatedTasks = tasks.map { task ->
-            if (task.id == taskCompletionToggle.taskId) {
-                task.toggleCompleted(taskCompletionToggle.date, taskCompletionToggle.completed)
-            } else {
-                task
-            }
-        }
-        return copy(tasks = updatedTasks)
-    }
-
-    fun addTask(newTask: NewTask): Room = copy(
-        tasks = tasks + Task.from(newTask)
-    )
-
-    fun updateTask(updatedTask: UpdatedTask): Room {
-        val updatedTasks = tasks.map { task ->
-            if (task.id == updatedTask.id) {
-                task.copy(name = updatedTask.name, recurrence = updatedTask.recurrence)
-            } else {
-                task
-            }
-        }
-        return copy(tasks = updatedTasks)
-    }
-
-    fun deleteTask(taskId: String): Room = copy(
-        tasks = tasks.filter { it.id != taskId }
-    )
-}
+)
 
 val sampleRoomLivingRoom = Room(
     id = "living_room",
@@ -49,10 +18,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "1",
             name = "Odkurzyć dywan",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.SATURDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.SATURDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 1),
                 LocalDate(2024, 6, 8)
             )
@@ -60,10 +29,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "2",
             name = "Umyć okna",
-            recurrence = Recurrence.Monthly(
-                daysOfMoth = setOf(1)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Monthly,
+            daysOfWeek = emptySet(),
+            daysOfMonth = setOf(1),
+            records = setOf(
                 LocalDate(2024, 5, 1),
                 LocalDate(2024, 6, 1)
             )
@@ -71,10 +40,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "3",
             name = "Zrobić porządek z książkami",
-            recurrence = Recurrence.Monthly(
-                daysOfMoth = setOf(15)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Monthly,
+            daysOfWeek = emptySet(),
+            daysOfMonth = setOf(15),
+            records = setOf(
                 LocalDate(2024, 5, 15),
                 LocalDate(2024, 6, 15)
             )
@@ -82,10 +51,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "13",
             name = "Przetrzeć meble",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.WEDNESDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.WEDNESDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 5),
                 LocalDate(2024, 6, 12)
             )
@@ -93,10 +62,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "14",
             name = "Podlać kwiaty",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.MONDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.MONDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 3),
                 LocalDate(2024, 6, 10)
             )
@@ -104,10 +73,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "15",
             name = "Wymienić świece zapachowe",
-            recurrence = Recurrence.Monthly(
-                daysOfMoth = setOf(1)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Monthly,
+            daysOfWeek = emptySet(),
+            daysOfMonth = setOf(1),
+            records = setOf(
                 LocalDate(2024, 5, 1),
                 LocalDate(2024, 6, 1)
             )
@@ -115,10 +84,10 @@ val sampleRoomLivingRoom = Room(
         Task(
             id = "16",
             name = "Wyprać zasłony",
-            recurrence = Recurrence.Monthly(
-                daysOfMoth = setOf(20)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Monthly,
+            daysOfWeek = emptySet(),
+            daysOfMonth = setOf(20),
+            records = setOf(
                 LocalDate(2024, 5, 20),
                 LocalDate(2024, 6, 20)
             )
@@ -135,7 +104,9 @@ val sampleRoomBedroom = Room(
             id = "4",
             name = "Zrobić łóżko",
             recurrence = Recurrence.Daily,
-            records = listOf(
+            daysOfWeek = emptySet(),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)
             )
@@ -143,10 +114,10 @@ val sampleRoomBedroom = Room(
         Task(
             id = "5",
             name = "Umyć lustro",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.SUNDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.SUNDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 2),
                 LocalDate(2024, 6, 9)
             )
@@ -155,7 +126,9 @@ val sampleRoomBedroom = Room(
             id = "6",
             name = "Przewietrzyć pokój",
             recurrence = Recurrence.Daily,
-            records = listOf(
+            daysOfWeek = emptySet(),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)
             )
@@ -172,7 +145,9 @@ val sampleRoomKitchen = Room(
             id = "7",
             name = "Umyć naczynia",
             recurrence = Recurrence.Daily,
-            records = listOf(
+            daysOfWeek = emptySet(),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 10),
                 LocalDate(2024, 6, 11)
             )
@@ -180,10 +155,10 @@ val sampleRoomKitchen = Room(
         Task(
             id = "8",
             name = "Odkurzyć podłogę",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.FRIDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.FRIDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 7),
                 LocalDate(2024, 6, 14)
             )
@@ -191,10 +166,10 @@ val sampleRoomKitchen = Room(
         Task(
             id = "9",
             name = "Wyczyścić lodówkę",
-            recurrence = Recurrence.Monthly(
-                daysOfMoth = setOf(1)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Monthly,
+            daysOfWeek = emptySet(),
+            daysOfMonth = setOf(1),
+            records = setOf(
                 LocalDate(2024, 5, 1),
                 LocalDate(2024, 6, 1)
             )
@@ -210,10 +185,10 @@ val sampleRoomBathroom = Room(
         Task(
             id = "10",
             name = "Umyć wannę",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.SATURDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.SATURDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 1),
                 LocalDate(2024, 6, 8)
             )
@@ -221,10 +196,10 @@ val sampleRoomBathroom = Room(
         Task(
             id = "11",
             name = "Wyczyścić toaletę",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.WEDNESDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.WEDNESDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 5),
                 LocalDate(2024, 6, 12)
             )
@@ -232,10 +207,10 @@ val sampleRoomBathroom = Room(
         Task(
             id = "12",
             name = "Umyć lustro",
-            recurrence = Recurrence.Weekly(
-                daysOfWeek = setOf(DayOfWeek.SUNDAY)
-            ),
-            records = listOf(
+            recurrence = Recurrence.Weekly,
+            daysOfWeek = setOf(DayOfWeek.SUNDAY),
+            daysOfMonth = emptySet(),
+            records = setOf(
                 LocalDate(2024, 6, 2),
                 LocalDate(2024, 6, 9)
             )

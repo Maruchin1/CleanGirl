@@ -16,6 +16,7 @@ import com.maruchin.cleangirl.data.model.Recurrence
 import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.Task
 import com.maruchin.cleangirl.data.model.UpdatedTask
+import com.maruchin.cleangirl.data.model.sampleRoomLivingRoom
 import com.maruchin.cleangirl.ui.taskeditor.components.RecurrenceSelector
 import com.maruchin.cleangirl.ui.taskeditor.components.TaskEditorTopBar
 import com.maruchin.cleangirl.ui.taskeditor.components.TaskNameField
@@ -37,6 +38,7 @@ fun TaskEditorBottomSheet(room: Room, task: Task?, onClose: () -> Unit) {
 
     ModalBottomSheet(onDismissRequest = onClose, sheetState = sheetState) {
         TaskEditorContent(
+            room = room,
             task = task,
             onAddTask = { newTask ->
                 viewModel.addTask(newTask)
@@ -57,6 +59,7 @@ fun TaskEditorBottomSheet(room: Room, task: Task?, onClose: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskEditorContent(
+    room: Room,
     task: Task?,
     onAddTask: (NewTask) -> Unit,
     onUpdateTask: (UpdatedTask) -> Unit,
@@ -73,9 +76,9 @@ fun TaskEditorContent(
                 canSave = formState.isValid,
                 onSave = {
                     if (task == null) {
-                        onAddTask(formState.createNewTask())
+                        onAddTask(formState.createNewTask(room))
                     } else {
-                        onUpdateTask(formState.createUpdatedTask(task))
+                        onUpdateTask(formState.createUpdatedTask(room, task))
                     }
                 },
                 onDelete = {
@@ -93,6 +96,7 @@ fun TaskEditorContent(
 fun TaskEditorContentPreview_Daily() {
     CleanGirlTheme {
         TaskEditorContent(
+            room = sampleRoomLivingRoom,
             task = null,
             onAddTask = {},
             onUpdateTask = {},
@@ -107,11 +111,12 @@ fun TaskEditorContentPreview_Daily() {
 fun TaskEditorContentPreview_Weekly() {
     CleanGirlTheme {
         TaskEditorContent(
+            room = sampleRoomLivingRoom,
             task = null,
             onAddTask = {},
             onUpdateTask = {},
             onDeleteTask = {},
-            formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Weekly())
+            formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Weekly)
         )
     }
 }
@@ -121,11 +126,12 @@ fun TaskEditorContentPreview_Weekly() {
 fun TaskEditorContentPreview_Monthly() {
     CleanGirlTheme {
         TaskEditorContent(
+            room = sampleRoomLivingRoom,
             task = null,
             onAddTask = {},
             onUpdateTask = {},
             onDeleteTask = {},
-            formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Monthly())
+            formState = rememberTaskEditorFormState(initialRecurrence = Recurrence.Monthly)
         )
     }
 }

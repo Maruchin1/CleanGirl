@@ -16,11 +16,11 @@ class TaskEditorViewModel(
 ) : ViewModel() {
 
     fun addTask(newTask: NewTask) = viewModelScope.launch {
-        roomRepository.addTask(room.id, newTask)
+        roomRepository.addTask(newTask)
     }
 
     fun updateTask(updatedTask: UpdatedTask) = viewModelScope.launch {
-        roomRepository.updateTask(room.id, updatedTask)
+        roomRepository.updateTask(updatedTask)
     }
 
     fun deleteTask(task: Task) = viewModelScope.launch {

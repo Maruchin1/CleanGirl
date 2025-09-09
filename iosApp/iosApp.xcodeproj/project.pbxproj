@@ -10,6 +10,7 @@
 		9B3AAE8C2E6D73A200784920 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9B3AAE8B2E6D73A200784920 /* FirebaseAuth */; };
 		9B3AAE8E2E6D73A200784920 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9B3AAE8D2E6D73A200784920 /* FirebaseCore */; };
 		9B3AAE902E6D73A200784920 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9B3AAE8F2E6D73A200784920 /* FirebaseFirestore */; };
+		9B3AAEA02E70CBED00784920 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9B3AAE9F2E70CBED00784920 /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 			files = (
 				9B3AAE8E2E6D73A200784920 /* FirebaseCore in Frameworks */,
 				9B3AAE8C2E6D73A200784920 /* FirebaseAuth in Frameworks */,
+				9B3AAEA02E70CBED00784920 /* FirebaseDatabase in Frameworks */,
 				9B3AAE902E6D73A200784920 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +99,7 @@
 				9B3AAE8B2E6D73A200784920 /* FirebaseAuth */,
 				9B3AAE8D2E6D73A200784920 /* FirebaseCore */,
 				9B3AAE8F2E6D73A200784920 /* FirebaseFirestore */,
+				9B3AAE9F2E70CBED00784920 /* FirebaseDatabase */,
 			);
 			productName = iosApp;
 			productReference = B9DA97B12DC1472C00A4DA20 /* CleanGirl.app */;
@@ -416,6 +419,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9B3AAE8A2E6D73A200784920 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		9B3AAE9F2E70CBED00784920 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B3AAE8A2E6D73A200784920 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

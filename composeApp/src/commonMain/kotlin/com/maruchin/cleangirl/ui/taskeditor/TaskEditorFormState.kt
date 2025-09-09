@@ -8,8 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.maruchin.cleangirl.core.utils.toggle
 import com.maruchin.cleangirl.data.model.NewTask
 import com.maruchin.cleangirl.data.model.Recurrence
+import com.maruchin.cleangirl.data.model.Room
 import com.maruchin.cleangirl.data.model.Task
 import com.maruchin.cleangirl.data.model.UpdatedTask
 import kotlinx.datetime.DayOfWeek
@@ -18,80 +20,67 @@ import kotlinx.datetime.DayOfWeek
 class TaskEditorFormState(
     val taskName: TextFieldState,
     initialRecurrence: Recurrence,
+    initialDaysOfWeek: Set<DayOfWeek>,
+    initialDaysOfMonth: Set<Int>
 ) {
 
-    private var daily by mutableStateOf(Recurrence.Daily)
-    private var weekly by mutableStateOf(Recurrence.Weekly())
-    private var monthly by mutableStateOf(Recurrence.Monthly())
+    private var daysOfWeek by mutableStateOf(initialDaysOfWeek)
+    private var daysOfMonth by mutableStateOf(initialDaysOfMonth)
 
     var recurrence by mutableStateOf(initialRecurrence)
-        private set
-
-    val isDailySelected: Boolean
-        get() = recurrence == daily
-
-    val isWeeklySelected: Boolean
-        get() = recurrence == weekly
-
-    val isMonthlySelected: Boolean
-        get() = recurrence == monthly
 
     val isValid: Boolean
-        get() = taskName.text.isNotBlank() && recurrence.isValid
+        get() = isTaskNameValid && isRecurrenceValid
 
-    init {
-        when (initialRecurrence) {
-            is Recurrence.Daily -> daily = initialRecurrence
-            is Recurrence.Weekly -> weekly = initialRecurrence
-            is Recurrence.Monthly -> monthly = initialRecurrence
+    private val isTaskNameValid: Boolean
+        get() = taskName.text.isNotBlank()
+
+    private val isRecurrenceValid: Boolean
+        get() = when (recurrence) {
+            Recurrence.Daily -> true
+            Recurrence.Weekly -> daysOfWeek.isNotEmpty()
+            Recurrence.Monthly -> daysOfMonth.isNotEmpty()
         }
-    }
 
-    fun isDayOfWeekSelected(dayOfWeek: DayOfWeek): Boolean = dayOfWeek in weekly.daysOfWeek
+    fun isDayOfWeekSelected(dayOfWeek: DayOfWeek): Boolean = dayOfWeek in daysOfWeek
 
-    fun isDayOfMonthSelected(dayOfMonth: Int): Boolean = dayOfMonth in monthly.daysOfMoth
+    fun isDayOfMonthSelected(dayOfMonth: Int): Boolean = dayOfMonth in daysOfMonth
 
     fun toggleDayOfWeek(dayOfWeek: DayOfWeek) {
-        weekly = weekly.toggleDayOfWeek(dayOfWeek)
-        recurrence = weekly
+        daysOfWeek = daysOfWeek.toggle(dayOfWeek)
     }
 
     fun toggleDayOfMonth(dayOfMonth: Int) {
-        monthly = monthly.toggleDayOfMonth(dayOfMonth)
-        recurrence = monthly
+        daysOfMonth = daysOfMonth.toggle(dayOfMonth)
     }
 
-    fun selectDaily() {
-        recurrence = daily
-    }
-
-    fun selectWeekly() {
-        recurrence = weekly
-    }
-
-    fun selectMonthly() {
-        recurrence = monthly
-    }
-
-    fun createNewTask() = NewTask(
+    fun createNewTask(room: Room) = NewTask(
+        roomId = room.id,
         name = taskName.text.toString(),
-        recurrence = recurrence
+        recurrence = recurrence,
+        daysOfWeek = daysOfWeek,
+        daysOfMonth = daysOfMonth,
     )
 
-    fun createUpdatedTask(task: Task) = UpdatedTask(
+    fun createUpdatedTask(room: Room, task: Task) = UpdatedTask(
+        roomId = room.id,
         id = task.id,
         name = taskName.text.toString(),
-        recurrence = recurrence
+        recurrence = recurrence,
+        daysOfWeek = daysOfWeek,
+        daysOfMonth = daysOfMonth,
     )
 }
 
 @Composable
 fun rememberTaskEditorFormState(
     initialTaskName: String = "",
-    initialRecurrence: Recurrence = Recurrence.Daily
+    initialRecurrence: Recurrence = Recurrence.Daily,
+    initialDaysOfWeek: Set<DayOfWeek> = emptySet(),
+    initialDaysOfMonth: Set<Int> = emptySet()
 ): TaskEditorFormState {
     val taskName = rememberTextFieldState(initialTaskName)
-    return remember(taskName) {
-        TaskEditorFormState(taskName, initialRecurrence)
+    return remember(taskName, initialRecurrence, initialDaysOfMonth) {
+        TaskEditorFormState(taskName, initialRecurrence, initialDaysOfWeek, initialDaysOfMonth)
     }
 }
