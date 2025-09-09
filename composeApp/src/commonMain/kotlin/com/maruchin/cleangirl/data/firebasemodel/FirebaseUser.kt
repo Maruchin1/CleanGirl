@@ -1,4 +1,4 @@
-package com.maruchin.cleangirl.data.mapper
+package com.maruchin.cleangirl.data.firebasemodel
 
 import com.maruchin.cleangirl.data.model.User
 import dev.gitlive.firebase.auth.FirebaseUser

@@ -1,7 +1,7 @@
 package com.maruchin.cleangirl.data.repository
 
 import co.touchlab.kermit.Logger
-import com.maruchin.cleangirl.data.mapper.toUser
+import com.maruchin.cleangirl.data.firebasemodel.toUser
 import com.maruchin.cleangirl.data.model.User
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.FirebaseException
