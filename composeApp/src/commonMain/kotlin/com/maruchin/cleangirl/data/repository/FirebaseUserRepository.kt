@@ -29,6 +29,12 @@ class FirebaseUserRepository : UserRepository {
         }
     }
 
+    override suspend fun setUserName(name: String) {
+        val user = auth.currentUser
+        checkNotNull(user) { "User must be not null" }
+        user.updateProfile(displayName = name)
+    }
+
     private suspend fun signInAnonymously() {
         try {
             auth.signInAnonymously()

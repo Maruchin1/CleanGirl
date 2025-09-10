@@ -10,4 +10,6 @@ interface UserRepository {
     val userFlow: Flow<User?>
 
     suspend fun signInAnonymouslyIfNeeded()
+
+    suspend fun setUserName(name: String)
 }
